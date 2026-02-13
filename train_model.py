@@ -1,14 +1,16 @@
 """
 Train an XGBoost model for chicken price forecasting.
 
-Loads the generated dataset, engineers features, trains an XGBoost regressor
-with a linear regression baseline for comparison, and saves the model + metrics.
+Loads the generated dataset, engineers features via the shared pipeline,
+trains an XGBoost regressor with a linear regression baseline for
+comparison, and saves the model and metrics.
 
 Usage:
     python train_model.py
 """
 
 import os
+import sys
 import warnings
 
 import numpy as np
@@ -16,68 +18,19 @@ import pandas as pd
 import xgboost as xgb
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.preprocessing import LabelEncoder
+
+from config import (
+    DATA_PATH,
+    FEATURE_COLUMNS,
+    FEATURE_IMPORTANCE_PATH,
+    MODEL_PATH,
+    TARGET,
+    TEST_PREDICTIONS_PATH,
+    XGB_PARAMS,
+)
+from features import engineer_features, validate_features
 
 warnings.filterwarnings("ignore")
-
-DATA_PATH = "data/chicken_price_dataset.csv"
-MODEL_PATH = "models/chicken_price_xgboost_model.json"
-FEATURE_IMPORTANCE_PATH = "outputs/feature_importance.csv"
-TEST_PREDICTIONS_PATH = "outputs/test_predictions.csv"
-
-FEATURE_COLUMNS = [
-    "price_lag_1",
-    "price_lag_2",
-    "price_lag_4",
-    "feed_lag_1",
-    "feed_lag_2",
-    "feed_price",
-    "supply_index",
-    "weather_severity",
-    "week_of_year",
-    "month",
-    "quarter",
-    "week_sin",
-    "week_cos",
-    "is_holiday",
-    "price_rolling_mean_4",
-    "price_rolling_std_4",
-    "price_change_1w",
-    "feed_change_1w",
-    "feed_to_price_ratio",
-    "feed_x_holiday",
-    "supply_x_weather",
-    "province_encoded",
-    "logistics_cost",
-]
-
-TARGET = "chicken_price"
-
-XGB_PARAMS = {
-    "objective": "reg:squarederror",
-    "max_depth": 6,
-    "learning_rate": 0.05,
-    "n_estimators": 200,
-    "min_child_weight": 3,
-    "subsample": 0.8,
-    "colsample_bytree": 0.8,
-    "gamma": 0.3,
-    "reg_lambda": 1.0,
-    "reg_alpha": 0.1,
-    "random_state": 42,
-    "n_jobs": -1,
-}
-
-
-def add_derived_features(df: pd.DataFrame) -> pd.DataFrame:
-    """Add interaction and cyclical features used for training."""
-    le = LabelEncoder()
-    df["province_encoded"] = le.fit_transform(df["province"])
-    df["feed_x_holiday"] = df["feed_price"] * df["is_holiday"]
-    df["supply_x_weather"] = df["supply_index"] * df["weather_severity"]
-    df["week_sin"] = np.sin(2 * np.pi * df["week_of_year"] / 52)
-    df["week_cos"] = np.cos(2 * np.pi * df["week_of_year"] / 52)
-    return df
 
 
 def main() -> None:
@@ -85,16 +38,23 @@ def main() -> None:
     print("TRAINING XGBOOST MODEL")
     print("=" * 60)
 
-    # --- Load & clean ---
+    # --- Load ---
+    if not os.path.exists(DATA_PATH):
+        print(f"ERROR: Dataset not found at {DATA_PATH}")
+        print("Run  python generate_dataset.py  first.")
+        sys.exit(1)
+
     print("\nLoading data...")
     df = pd.read_csv(DATA_PATH, parse_dates=["date"])
     print(f"  Loaded {len(df)} rows, {df.shape[1]} columns")
 
-    df = df.dropna().copy()
-    df = add_derived_features(df)
-    print(f"  After cleaning: {len(df)} rows")
+    # --- Feature engineering (shared pipeline) ---
+    print("\nEngineering features...")
+    df = engineer_features(df)
+    validate_features(df)
+    print(f"  Ready: {len(df)} rows, {len(FEATURE_COLUMNS)} features")
 
-    # --- Time-based train/test split (85/15) ---
+    # --- Time-based train/test split (85 / 15) ---
     df = df.sort_values("date").reset_index(drop=True)
     split_idx = int(len(df) * 0.85)
 
@@ -160,8 +120,8 @@ def main() -> None:
     print(f"\nTop 10 features:\n{importance.head(10).to_string(index=False)}")
 
     # --- Save artifacts ---
-    os.makedirs("models", exist_ok=True)
-    os.makedirs("outputs", exist_ok=True)
+    os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
+    os.makedirs(os.path.dirname(FEATURE_IMPORTANCE_PATH), exist_ok=True)
 
     model.save_model(MODEL_PATH)
     importance.to_csv(FEATURE_IMPORTANCE_PATH, index=False)

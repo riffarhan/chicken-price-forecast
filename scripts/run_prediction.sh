@@ -21,7 +21,7 @@ if [ -f venv/bin/activate ]; then
     source venv/bin/activate
 fi
 
-python predict.py
+python3 predict.py
 STATUS=$?
 
 if [ $STATUS -eq 0 ]; then

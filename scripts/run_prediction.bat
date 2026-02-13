@@ -22,5 +22,3 @@ if %ERRORLEVEL% EQU 0 (
 ) else (
     echo ERROR: Pipeline failed — check logs\ for details.
 )
-
-pause

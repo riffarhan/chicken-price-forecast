@@ -22,42 +22,48 @@ import streamlit as st
 st.set_page_config(page_title="Chicken Price Forecast", page_icon="🐔", layout="wide")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUTS_DIR = os.path.join(BASE_DIR, "outputs")
 
 
 # ---------------------------------------------------------------------------
 # Data loading
 # ---------------------------------------------------------------------------
 @st.cache_data(ttl=3600)
-def load_data():
-    predictions_path = os.path.join(BASE_DIR, "outputs", "predictions_latest.csv")
-    metrics_path = os.path.join(BASE_DIR, "outputs", "model_metrics.csv")
-
-    if not os.path.exists(predictions_path):
-        return None, None, None
-
-    predictions = pd.read_csv(predictions_path, parse_dates=["date"])
-
-    metrics = pd.DataFrame()
-    if os.path.exists(metrics_path):
-        metrics = pd.read_csv(metrics_path, parse_dates=["timestamp"])
-
-    # Load latest SHAP file
-    shap_df = None
-    outputs_dir = os.path.join(BASE_DIR, "outputs")
-    shap_files = sorted(f for f in os.listdir(outputs_dir) if f.startswith("shap_summary"))
-    if shap_files:
-        shap_df = pd.read_csv(
-            os.path.join(outputs_dir, shap_files[-1]), parse_dates=["date"]
-        )
-
-    return predictions, metrics, shap_df
+def load_predictions() -> pd.DataFrame | None:
+    path = os.path.join(OUTPUTS_DIR, "predictions_latest.csv")
+    if not os.path.exists(path):
+        return None
+    return pd.read_csv(path, parse_dates=["date"])
 
 
-df, metrics, shap_df = load_data()
+@st.cache_data(ttl=3600)
+def load_metrics() -> pd.DataFrame:
+    path = os.path.join(OUTPUTS_DIR, "model_metrics.csv")
+    if not os.path.exists(path):
+        return pd.DataFrame()
+    return pd.read_csv(path, parse_dates=["timestamp"])
+
+
+@st.cache_data(ttl=3600)
+def load_shap() -> pd.DataFrame | None:
+    if not os.path.isdir(OUTPUTS_DIR):
+        return None
+    files = sorted(f for f in os.listdir(OUTPUTS_DIR) if f.startswith("shap_summary"))
+    if not files:
+        return None
+    try:
+        return pd.read_csv(os.path.join(OUTPUTS_DIR, files[-1]), parse_dates=["date"])
+    except Exception:
+        return None
+
+
+df = load_predictions()
+metrics = load_metrics()
+shap_df = load_shap()
 
 if df is None:
     st.error("No prediction data found. Run the pipeline first:")
-    st.code("python predict.py", language="bash")
+    st.code("python generate_dataset.py\npython train_model.py\npython predict.py", language="bash")
     st.stop()
 
 # ---------------------------------------------------------------------------
@@ -68,7 +74,7 @@ st.markdown("Real-time predictions powered by XGBoost")
 
 if len(metrics) > 0:
     last_update = metrics["timestamp"].max()
-    st.info(f"Last updated: {last_update.strftime('%Y-%m-%d %H:%M:%S')}")
+    st.caption(f"Last updated: {last_update.strftime('%Y-%m-%d %H:%M:%S')}")
 
 # ---------------------------------------------------------------------------
 # Key metrics
@@ -78,13 +84,13 @@ st.header("Model Performance")
 if len(metrics) > 0:
     latest = metrics.iloc[-1]
     c1, c2, c3, c4 = st.columns(4)
-    c1.metric("Current RMSE", f"{latest['rmse']:.0f} IDR/kg")
+    c1.metric("RMSE", f"{latest['rmse']:,.0f} IDR/kg")
     c2.metric("MAPE", f"{latest['mape']:.2f}%")
     status_icon = "🟢" if latest["status"] == "HEALTHY" else "🔴"
     c3.metric("Status", f"{status_icon} {latest['status']}")
-    c4.metric("Predictions", f"{latest['n_predictions']:,}")
+    c4.metric("Predictions", f"{int(latest['n_predictions']):,}")
 else:
-    st.warning("No performance metrics available yet.")
+    st.info("No performance metrics available yet — run the prediction pipeline.")
 
 # ---------------------------------------------------------------------------
 # Province price trend
@@ -103,8 +109,8 @@ fig.add_trace(
         y=prov["chicken_price"],
         mode="lines+markers",
         name="Actual",
-        line=dict(color="#1f77b4", width=3),
-        marker=dict(size=8),
+        line=dict(color="#1f77b4", width=2),
+        marker=dict(size=6),
     )
 )
 fig.add_trace(
@@ -113,8 +119,8 @@ fig.add_trace(
         y=prov["predicted_price"],
         mode="lines+markers",
         name="Predicted",
-        line=dict(color="#ff7f0e", width=3, dash="dash"),
-        marker=dict(size=8, symbol="square"),
+        line=dict(color="#ff7f0e", width=2, dash="dash"),
+        marker=dict(size=6, symbol="square"),
     )
 )
 fig.update_layout(
@@ -122,7 +128,7 @@ fig.update_layout(
     xaxis_title="Date",
     yaxis_title="Price (IDR/kg)",
     hovermode="x unified",
-    height=500,
+    height=480,
     template="plotly_white",
 )
 st.plotly_chart(fig, use_container_width=True)
@@ -152,7 +158,8 @@ st.dataframe(display, use_container_width=True, hide_index=True)
 if shap_df is not None:
     st.header("What Drives the Predictions? (SHAP)")
     st.markdown(
-        "**Top factor per province** — positive (+) means the factor pushes the price up."
+        "**Top factor per province** — positive (+) pushes the price up, "
+        "negative (-) pushes it down."
     )
     shap_display = shap_df[
         ["province", "predicted_price", "top_driver", "top_driver_impact"]
@@ -161,7 +168,7 @@ if shap_df is not None:
         "{:,.0f} IDR/kg".format
     )
     shap_display["top_driver_impact"] = shap_display["top_driver_impact"].map(
-        "{:+.0f} IDR/kg".format
+        "{:+,.0f} IDR/kg".format
     )
     shap_display.columns = ["Province", "Predicted Price", "Top Factor", "Impact"]
     st.dataframe(shap_display, use_container_width=True, hide_index=True)
@@ -184,7 +191,7 @@ fig_bar = px.bar(
     text="predicted_price",
 )
 fig_bar.update_traces(texttemplate="%{text:,.0f}", textposition="outside")
-fig_bar.update_layout(height=600, showlegend=False)
+fig_bar.update_layout(height=550, showlegend=False)
 st.plotly_chart(fig_bar, use_container_width=True)
 
 # ---------------------------------------------------------------------------
@@ -199,15 +206,15 @@ if len(metrics) > 1:
             y=metrics["rmse"],
             mode="lines+markers",
             name="RMSE",
-            line=dict(color="purple", width=3),
-            marker=dict(size=10),
+            line=dict(color="purple", width=2),
+            marker=dict(size=8),
         )
     )
     fig_perf.add_hline(
         y=1200,
         line_dash="dash",
         line_color="red",
-        annotation_text="Alert Threshold (1200)",
+        annotation_text="Alert Threshold (1,200)",
         annotation_position="right",
     )
     fig_perf.update_layout(
@@ -228,8 +235,8 @@ if len(metrics) > 0:
     lm = metrics.iloc[-1]
     if lm["status"] == "DEGRADED":
         st.error(
-            f"Performance Alert: RMSE ({lm['rmse']:.0f}) exceeds threshold. "
-            "Consider retraining the model."
+            f"Performance Alert: RMSE ({lm['rmse']:,.0f}) exceeds threshold. "
+            "Consider retraining the model (`python train_model.py`)."
         )
     else:
         st.success("Model performance is healthy.")
@@ -240,7 +247,9 @@ if len(metrics) > 0:
         with st.expander("View provinces"):
             st.dataframe(high_err[["province", "prediction_error_pct"]])
     else:
-        st.success("All provinces within acceptable prediction accuracy (<5% error).")
+        st.success("All provinces within acceptable accuracy (< 5% error).")
+else:
+    st.info("Run the prediction pipeline to see alerts.")
 
 # ---------------------------------------------------------------------------
 # Download
@@ -269,5 +278,6 @@ with c2:
 # ---------------------------------------------------------------------------
 st.markdown("---")
 st.markdown(
-    "**Chicken Price Forecasting** | Powered by XGBoost | Updates weekly"
+    "**Chicken Price Forecasting** | Powered by XGBoost | "
+    "[GitHub](https://github.com/riffarhan/chicken-price-forecast)"
 )

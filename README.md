@@ -2,29 +2,30 @@
 
 An end-to-end machine learning system that predicts weekly chicken prices across 15 Indonesian provinces using XGBoost, with SHAP-based explainability and a Streamlit dashboard.
 
+![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
+![License: MIT](https://img.shields.io/badge/license-MIT-green)
+
 ## Features
 
 - **XGBoost regression** with 23 engineered features (lags, rolling stats, seasonality, interactions)
 - **SHAP explanations** — understand *why* each prediction was made
 - **Interactive Streamlit dashboard** with province-level charts, alerts, and CSV downloads
 - **Automated weekly pipeline** with performance monitoring and degradation alerts
-- **Synthetic data generator** that produces realistic price patterns with holiday effects, supply shocks, and regional variation
+- **Shared feature engineering** — single source of truth across training and inference
+- **Deterministic province encoding** — consistent predictions regardless of input subset
 
 ## Quick Start
 
 ```bash
-# Clone the repository
 git clone https://github.com/riffarhan/chicken-price-forecast.git
 cd chicken-price-forecast
 
-# Create and activate a virtual environment
 python -m venv venv
 source venv/bin/activate   # Windows: venv\Scripts\activate
 
-# Install dependencies
 pip install -r requirements.txt
 
-# 1. Generate sample dataset
+# 1. Generate sample dataset (1,560 rows — 104 weeks x 15 provinces)
 python generate_dataset.py
 
 # 2. Train the model
@@ -43,21 +44,42 @@ The dashboard opens at **http://localhost:8501**.
 
 ```
 chicken-price-forecast/
+├── config.py               # Shared paths, constants, hyperparameters
+├── features.py             # Shared feature engineering pipeline
 ├── generate_dataset.py     # Create synthetic training data
-├── train_model.py          # Train XGBoost model with baseline comparison
-├── predict.py              # Production prediction pipeline
+├── train_model.py          # Train XGBoost with baseline comparison
+├── predict.py              # Production prediction + SHAP + monitoring
 ├── dashboard.py            # Streamlit web dashboard
-├── requirements.txt        # Python dependencies
+├── requirements.txt
 ├── scripts/
 │   ├── run_prediction.sh   # Cron automation (Mac/Linux)
 │   └── run_prediction.bat  # Task Scheduler automation (Windows)
-├── data/                   # Generated datasets (gitignored)
-├── models/                 # Trained model artifacts (gitignored)
+├── data/                   # Generated datasets
+├── models/                 # Trained model artifacts
 ├── outputs/                # Predictions, metrics, SHAP summaries
 └── logs/                   # Execution logs
 ```
 
 ## How It Works
+
+### Architecture
+
+```
+generate_dataset.py ──▸ data/chicken_price_dataset.csv
+                              │
+                              ▼
+train_model.py ────────▸ models/chicken_price_xgboost_model.json
+                              │
+                              ▼
+predict.py ────────────▸ outputs/predictions_latest.csv
+                         outputs/model_metrics.csv
+                         outputs/shap_summary_*.csv
+                              │
+                              ▼
+dashboard.py ──────────▸ http://localhost:8501
+```
+
+All scripts share feature engineering via `features.py` and configuration via `config.py`, so the transformation logic is defined once and stays consistent.
 
 ### Data Generation
 
@@ -65,26 +87,28 @@ chicken-price-forecast/
 
 | Factor | Description |
 |--------|-------------|
-| **Seasonality** | Q4 price spikes, Q1 normalization |
-| **Holidays** | Idul Fitri, Christmas/New Year, Independence Day |
-| **Feed costs** | Correlated with chicken prices, trending upward |
-| **Supply shocks** | Random 5% weekly probability |
-| **Weather** | Three severity levels affecting prices |
-| **Regional variation** | Different base prices and logistics costs per province |
+| Seasonality | Q4 price spikes, Q1 normalization |
+| Holidays | Idul Fitri, Christmas/New Year, Independence Day |
+| Feed costs | Correlated with chicken prices, trending upward |
+| Supply shocks | Random 5% weekly probability |
+| Weather | Three severity levels affecting prices |
+| Regional variation | Different base prices and logistics costs per province |
 
-Output: `data/chicken_price_dataset.csv` — 1,560 rows (104 weeks × 15 provinces)
+### Feature Engineering
 
-### Model Training
+The shared `features.py` module creates 23 features from the raw data:
 
-`train_model.py` trains an XGBoost regressor using 23 features:
+- **Lagged prices** (1, 2, 4 weeks) and **lagged feed costs** (1, 2 weeks)
+- **Rolling statistics** — 4-week mean and standard deviation
+- **Change features** — week-over-week price and feed changes
+- **Ratio** — feed-to-price ratio
+- **Province encoding** — deterministic integer mapping (not LabelEncoder)
+- **Interaction features** — feed x holiday, supply x weather
+- **Cyclical encodings** — sin/cos of week-of-year
 
-- **Lagged prices** (1, 2, 4 weeks) and **lagged feed costs**
-- **Rolling statistics** (4-week mean and std)
-- **Temporal encodings** (week, month, quarter, cyclical sin/cos)
-- **Interaction features** (feed × holiday, supply × weather)
-- **Province encoding** and **logistics cost**
+### Model Performance
 
-The model is benchmarked against a linear regression baseline. Typical results on the synthetic dataset:
+Typical results on the synthetic dataset:
 
 | Metric | Linear Regression | XGBoost |
 |--------|-------------------|---------|
@@ -92,24 +116,14 @@ The model is benchmarked against a linear regression baseline. Typical results o
 | MAPE | ~5% | ~3.2% |
 | R² | ~0.92 | ~0.97 |
 
-### Prediction Pipeline
-
-`predict.py` runs the full inference loop:
-
-1. Load latest data and apply feature engineering
-2. Generate predictions with the trained model
-3. Calculate SHAP values for the most recent observation per province
-4. Validate performance against the RMSE threshold (1,200 IDR/kg)
-5. Save predictions, SHAP summaries, and append metrics history
-
 ### Dashboard
 
-`dashboard.py` provides:
+The Streamlit dashboard provides:
 
-- Real-time performance metrics (RMSE, MAPE, status)
+- Real-time performance metrics (RMSE, MAPE, health status)
 - Province-level actual vs. predicted price charts
-- SHAP-based explanation of prediction drivers
-- Cross-province price comparison
+- SHAP-based explanation of prediction drivers per province
+- Cross-province price comparison bar chart
 - Performance trend monitoring with alert threshold
 - CSV download for predictions and SHAP analysis
 
@@ -127,15 +141,15 @@ crontab -e
 
 ### Windows (Task Scheduler)
 
-1. Open Task Scheduler → Create Basic Task
+1. Open Task Scheduler and create a basic task
 2. Trigger: Weekly, Monday, 6:00 AM
-3. Action: Start a program → browse to `scripts\run_prediction.bat`
+3. Action: Start a program — browse to `scripts\run_prediction.bat`
 
-## When to Retrain
+## Retraining
 
-The pipeline logs a `DEGRADED` status when RMSE exceeds the threshold. Retrain if:
+The pipeline logs a `DEGRADED` status when RMSE exceeds the threshold (1,200 IDR/kg). Retrain when:
 
-- RMSE > 1,200 IDR/kg for 2+ consecutive weeks
+- RMSE > 1,200 for 2+ consecutive weeks
 - 4 weeks of upward RMSE trend
 - Quarterly scheduled retraining
 
@@ -145,20 +159,25 @@ python train_model.py
 
 ## Adapting to Real Data
 
-This project ships with a synthetic data generator for demonstration. To use real price data:
+This project ships with a synthetic data generator for demonstration. To use your own data:
 
-1. Replace `data/chicken_price_dataset.csv` with your own CSV using the same column schema
-2. Re-run `python train_model.py` to retrain on your data
-3. Run `python predict.py` to generate forecasts
+1. Prepare a CSV with these columns: `date`, `province`, `chicken_price`, `feed_price`, `supply_index`, `weather_severity`, `is_holiday`, `week_of_year`, `month`, `quarter`, `year`, `logistics_cost`
+2. Save it to `data/chicken_price_dataset.csv`
+3. Run `python train_model.py` to train on your data
+4. Run `python predict.py` to generate forecasts
 
-Required columns: `date`, `province`, `chicken_price`, `feed_price`, `supply_index`, `weather_severity`, `is_holiday`, `week_of_year`, `month`, `quarter`, `year`, `logistics_cost`
+The feature engineering pipeline (`features.py`) will create all derived columns automatically. Province names must match those defined in `config.py` — add new provinces there if needed.
 
 ## Tech Stack
 
-- **ML**: XGBoost, scikit-learn, SHAP
-- **Data**: pandas, NumPy, SciPy
-- **Visualization**: Streamlit, Plotly, Matplotlib, Seaborn
-- **Python**: 3.10+
+| Category | Libraries |
+|----------|-----------|
+| ML | XGBoost, scikit-learn, SHAP |
+| Data | pandas, NumPy, SciPy |
+| Dashboard | Streamlit, Plotly |
+| Visualization | Matplotlib, Seaborn |
+
+Requires **Python 3.10+**.
 
 ## License
 

@@ -13,25 +13,7 @@ import os
 import numpy as np
 import pandas as pd
 
-PROVINCES = [
-    "Jakarta",
-    "West Java",
-    "Central Java",
-    "East Java",
-    "Banten",
-    "Yogyakarta",
-    "Bali",
-    "South Sumatra",
-    "North Sumatra",
-    "Lampung",
-    "West Kalimantan",
-    "South Sulawesi",
-    "East Kalimantan",
-    "Riau",
-    "Aceh",
-]
-
-OUTPUT_PATH = "data/chicken_price_dataset.csv"
+from config import DATA_PATH, PROVINCES
 
 
 def generate_dataset(
@@ -57,7 +39,6 @@ def generate_dataset(
 
     for province in PROVINCES:
         base_price = np.random.uniform(24_000, 28_000)
-        price_volatility = np.random.uniform(0.05, 0.15)
         logistics_cost = np.random.uniform(0, 2_000)
 
         for i, date in enumerate(date_range):
@@ -88,13 +69,13 @@ def generate_dataset(
                 holiday_effect = np.random.uniform(800, 1_500)
                 is_holiday = 1
 
-            # Feed price — correlated with chicken price, with trend
+            # Feed price — correlated with chicken price, with upward trend
             feed_base = 14_000 + i * 20
             feed_noise = np.random.normal(0, 800)
             feed_seasonality = 500 * np.sin(2 * np.pi * week_of_year / 52)
             feed_price = feed_base + feed_noise + feed_seasonality
 
-            # Supply shocks (5% chance each week)
+            # Supply shocks (5 % chance each week)
             supply_shock = 0.0
             if np.random.random() < 0.05:
                 supply_shock = np.random.uniform(-4_000, -2_000)
@@ -102,7 +83,7 @@ def generate_dataset(
             supply_index = np.random.uniform(80, 120)
             supply_effect = (100 - supply_index) * 30
 
-            # Weather severity (0=normal, 1=moderate, 2=severe)
+            # Weather severity (0 = normal, 1 = moderate, 2 = severe)
             weather_severity = np.random.choice([0, 1, 2], p=[0.7, 0.2, 0.1])
             weather_effect = weather_severity * np.random.uniform(200, 800)
 
@@ -145,30 +126,7 @@ def generate_dataset(
                 }
             )
 
-    df = pd.DataFrame(rows)
-    df = df.sort_values(["province", "date"]).reset_index(drop=True)
-
-    # Lagged features
-    for lag in [1, 2, 4]:
-        df[f"price_lag_{lag}"] = df.groupby("province")["chicken_price"].shift(lag)
-        df[f"feed_lag_{lag}"] = df.groupby("province")["feed_price"].shift(lag)
-
-    # Rolling statistics
-    df["price_rolling_mean_4"] = df.groupby("province")["chicken_price"].transform(
-        lambda x: x.rolling(window=4, min_periods=1).mean()
-    )
-    df["price_rolling_std_4"] = df.groupby("province")["chicken_price"].transform(
-        lambda x: x.rolling(window=4, min_periods=1).std()
-    )
-
-    # Change features
-    df["price_change_1w"] = df.groupby("province")["chicken_price"].diff(1)
-    df["feed_change_1w"] = df.groupby("province")["feed_price"].diff(1)
-
-    # Ratio
-    df["feed_to_price_ratio"] = df["feed_price"] / df["chicken_price"]
-
-    return df
+    return pd.DataFrame(rows)
 
 
 def main() -> None:
@@ -178,14 +136,14 @@ def main() -> None:
 
     df = generate_dataset()
 
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    df.to_csv(OUTPUT_PATH, index=False)
+    os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
+    df.to_csv(DATA_PATH, index=False)
 
-    print(f"\nShape: {df.shape}")
+    print(f"\nShape:      {df.shape}")
     print(f"Date range: {df['date'].min()} to {df['date'].max()}")
-    print(f"Provinces: {df['province'].nunique()}")
+    print(f"Provinces:  {df['province'].nunique()}")
     print(f"\nPrice statistics:\n{df['chicken_price'].describe()}")
-    print(f"\nSaved to: {OUTPUT_PATH}")
+    print(f"\nSaved to: {DATA_PATH}")
     print("=" * 60)
 
 
