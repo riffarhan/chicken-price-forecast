@@ -1,0 +1,21 @@
+horizon,method,coverage,mean_width_pct,interval_score,n,point_MAE,point_MAPE,point_skill_vs_naive
+1,Scaled conformal (residual quantiles),0.8005,9.2958,4719.6602,12240,,,
+1,Quantile regression (raw),0.7005,6.5632,4749.0972,12240,,,
+1,Conformalized quantile regression (CQR),0.8300,9.1273,4620.4177,12240,,,
+1,Point model (pseudo-Huber),,,,12240,959.1545,2.6807,0.0372
+1,Quantile model median (q50),,,,12240,942.4835,2.6351,0.0540
+2,Scaled conformal (residual quantiles),0.7994,15.4483,7540.9377,12240,,,
+2,Quantile regression (raw),0.6551,9.5272,7397.8826,12240,,,
+2,Conformalized quantile regression (CQR),0.8313,14.1437,7025.7551,12240,,,
+2,Point model (pseudo-Huber),,,,12240,1524.7207,4.2611,0.0236
+2,Quantile model median (q50),,,,12240,1495.9997,4.1854,0.0420
+4,Scaled conformal (residual quantiles),0.7784,20.7836,10410.4313,12240,,,
+4,Quantile regression (raw),0.6096,11.6605,10375.1883,12240,,,
+4,Conformalized quantile regression (CQR),0.8385,19.5890,9509.6937,12240,,,
+4,Point model (pseudo-Huber),,,,12240,2061.3048,5.7239,0.0664
+4,Quantile model median (q50),,,,12240,2034.7771,5.6577,0.0784
+8,Scaled conformal (residual quantiles),0.7477,24.9511,13276.0982,12240,,,
+8,Quantile regression (raw),0.5335,12.6582,13570.2629,12240,,,
+8,Conformalized quantile regression (CQR),0.8254,23.4251,11703.2635,12240,,,
+8,Point model (pseudo-Huber),,,,12240,2585.7398,7.1506,0.1243
+8,Quantile model median (q50),,,,12240,2533.0717,7.0097,0.1422

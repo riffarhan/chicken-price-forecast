@@ -37,5 +37,7 @@ This project only uses features that are:
 - DOC (day-old chick) and live-bird prices, if a public source appears
   (significant in Fitrimawati et al., 2024)
 - Domestic maize prices from PIHPS-like sources instead of global benchmarks
-- Probabilistic models (quantile gradient boosting) and hierarchical
-  reconciliation of province and national forecasts
+- Full MinT covariance and probabilistic reconciliation (the current
+  reconciliation uses a diagonal variance proxy)
+- Pre-registered test on post-Nov-2026 data: quantile median as the point
+  forecast, and dropping the heat-stress features

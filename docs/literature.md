@@ -100,6 +100,10 @@ A plausible channel for chicken is (a) flooding disrupting transport from farms 
 | Gradient-boosted trees | Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. *KDD '16*. https://doi.org/10.1145/2939672.2939785 |
 | Per-prediction explanations | Lundberg, S. M., & Lee, S.-I. (2017). A unified approach to interpreting model predictions. *NeurIPS 2017*. arXiv:1705.07874 |
 | Prediction intervals calibrated on past out-of-sample residuals in time order | Stocker, M., Małgorzewicz, W., Fontana, M., & Ben Taieb, S. (2025). A gentle introduction to conformal time series forecasting. arXiv:2511.13608 |
+| Conformalized quantile regression (CQR): quantile models + conformal calibration, adaptive interval widths | Romano, Y., Patterson, E., & Candès, E. J. (2019). Conformalized quantile regression. *Advances in Neural Information Processing Systems 32*, 3543–3553. arXiv:1905.03222 |
+| Interval score to compare interval methods (rewards narrow intervals, penalises misses) | Gneiting, T., & Raftery, A. E. (2007). Strictly proper scoring rules, prediction, and estimation. *Journal of the American Statistical Association*, 102(477), 359–378. https://doi.org/10.1198/016214506000001437 |
+| Reconciling province and national forecasts so they are coherent | Hyndman, R. J., Ahmed, R. A., Athanasopoulos, G., & Shang, H. L. (2011). Optimal combination forecasts for hierarchical time series. *Computational Statistics & Data Analysis*, 55(9), 2579–2589. https://doi.org/10.1016/j.csda.2011.03.006 |
+| Weighted (MinT-family) reconciliation using forecast-error variances | Wickramasuriya, S. L., Athanasopoulos, G., & Hyndman, R. J. (2019). Optimal forecast reconciliation for hierarchical and grouped time series through trace minimization. *Journal of the American Statistical Association*, 114(526), 804–819. https://doi.org/10.1080/01621459.2018.1448825 |
 
 ## Known missing variables
 

@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "run_at_utc": "2026-11-16T11:33:45+00:00",
+  "run_at_utc": "2026-11-16T12:47:57+00:00",
   "data_first_week": "2018-01-07",
   "data_last_week": "2026-11-15",
   "n_provinces": 34,
@@ -12,7 +12,7 @@
     4,
     8
   ],
-  "backtest_weeks": 156,
+  "backtest_weeks": 360,
   "feature_groups": [
     "core_price",
     "calendar",
@@ -20,16 +20,16 @@
     "weather_heat"
   ],
   "backtest_mape": {
-    "1": 2.29,
-    "2": 3.676,
-    "4": 5.069,
-    "8": 6.652
+    "1": 2.681,
+    "2": 4.261,
+    "4": 5.724,
+    "8": 7.151
   },
   "backtest_skill_vs_naive": {
-    "1": 0.049,
-    "2": 0.031,
-    "4": 0.044,
-    "8": 0.044
+    "1": 0.037,
+    "2": 0.024,
+    "4": 0.066,
+    "8": 0.124
   },
   "features": [
     "ret_1",
@@ -67,5 +67,16 @@
     "wholesale_ret_1",
     "hot_days_4w",
     "tmax_4w_anom"
-  ]
+  ],
+  "national_weights": {
+    "weight_sum": 0.9921066174667867,
+    "fit_mape_pct": 0.05454193107574708,
+    "top_weights": {
+      "Jawa Barat": 0.052,
+      "Kalimantan Selatan": 0.042,
+      "Jawa Timur": 0.041,
+      "Sulawesi Tengah": 0.041,
+      "Sumatera Barat": 0.038
+    }
+  }
 }

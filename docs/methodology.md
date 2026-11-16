@@ -44,28 +44,35 @@ The v1 model reported R² ≈ 0.97 because several features (rolling means, rati
 
 ## 5. Evaluation design
 
-- **Rolling-origin backtest** (Tashman, 2000): the most recent 52 weekly origins, plus 13 earlier warm-up origins used only to calibrate intervals. The model is retrained every 13 weeks using only rows whose target week is on or before the retraining date.
+- **Rolling-origin backtest** (Tashman, 2000): the most recent **360 weekly origins** per horizon (Dec 2019 – Nov 2026, 12,240 forecasts per horizon), plus 13 earlier warm-up origins used only to calibrate intervals. The model is retrained every 13 weeks using only rows whose target week is on or before the retraining date.
 - **Baselines** (Hyndman & Athanasopoulos, *FPP3*, Ch. 5):
   - *Naive:* next price = last observed price.
   - *Seasonal naive:* apply last year's change over the same calendar window.
-- **Metrics:** MAE, RMSE, MAPE, MAE reduction vs naive, direction accuracy, 80% interval coverage.
+- **Metrics:** MAE, RMSE, MAPE, MAE reduction vs naive, direction accuracy, 80% interval coverage, mean interval width, and the interval score (Gneiting & Raftery, 2007).
 - **Significance:** Diebold–Mariano test (Diebold & Mariano, 1995) with the Harvey–Leybourne–Newbold small-sample correction. Errors are averaged across provinces per origin week first, so the 34 correlated province series don't inflate the effective sample size.
-- **Prediction intervals:** split-conformal style. Residuals are normalised by each province's recent 13-week volatility × √h, and their empirical 10th/90th percentiles come only from forecasts whose outcomes were already known at the time (sequential calibration).
+- **Stability:** metrics are also reported per calendar year of the forecast origin (`outputs/backtest_metrics_by_year.csv`).
+- **Prediction intervals**, three methods compared on the same backtest, all calibrated only on information available at each origin:
+  1. *Scaled conformal:* point-model residuals normalised by each province's 13-week volatility × √h; the 10th/90th percentiles of past residuals give the band.
+  2. *Quantile regression:* an XGBoost model trained with the pinball loss for the 10th, 50th and 90th percentiles.
+  3. *Conformalized quantile regression (CQR;* Romano et al., 2019*):* the quantile band widened (or narrowed) by the 80th percentile of past conformity scores max(q10 − y, y − q90).
+- **National forecasts and reconciliation:** the PIHPS national average is modelled as a weighted sum of the provinces, with non-negative least-squares weights estimated on the 104 weeks before each refit. Three national forecasts are compared: *direct* (the province model applied to the national series, which it never trains on), *bottom-up* (weighted sum of province forecasts) and *reconciled* (weighted least-squares reconciliation of national and province forecasts with inverse-variance weights, in the spirit of Hyndman et al., 2011 and Wickramasuriya et al., 2019).
 
 ## 6. Feature selection: literature + ablation
 
 Each candidate feature group comes from the literature ([literature.md](literature.md)). Each group was then tested with two designs on the same backtest: **leave-one-group-out** (all groups vs all minus one) and **add-one-group-in** (core price features vs core plus one).
 
-Rolling-origin backtest over 156 origins at h = 1 and 4 weeks. Change = MAE relative to the reference design, with the Diebold–Mariano p-value. Source: `outputs/ablation.csv`.
+**How the decision was made.** The keep/drop decisions were taken on the most recent 52 origins only, so that older origins stay an untouched hold-out. Hyper-parameters were declared before any testing.
 
-| Group | Add to core: Δ MAE 1w / 4w | DM p 1w / 4w | Leave out of all: Δ MAE 1w / 4w | DM p 1w / 4w | Decision |
-|---|---|---|---|---|---|
-| Calendar (Ramadan, Lebaran, holidays) | −1.2% / +0.2% | 0.24 / 0.94 | +1.3% / +2.6% | 0.13 / 0.40 | **Keep**: helps in 3 of 4 comparisons, strong literature |
-| Supply chain (producer, wholesale) | −0.6% / −0.3% | **0.032** / 0.30 | +0.1% / +0.3% | 0.88 / 0.66 | **Keep**: significant at 1 week |
-| Heat stress | −0.2% / −0.1% | 0.52 / 0.84 | +0.2% / +0.9% | 0.68 / 0.28 | **Keep**: small but same sign in all 4 comparisons |
-| Global feed prices | **+2.6% / +9.3%** | **0.022 / 0.024** | −2.1% / −6.2% | **0.010** / 0.071 | **Drop**: significantly harmful |
-| Rainfall | +0.2% / −0.2% | 0.43 / 0.75 | −0.2% / +0.1% | 0.58 / 0.81 | **Drop**: no effect |
-| Egg price | −0.2% / −0.3% | 0.50 / 0.61 | −0.5% / +1.2% | 0.13 / 0.11 | **Drop**: mixed signs |
+**Confirmation on seven years.** The same ablation was then re-run on all 360 origins (Dec 2019 – Nov 2026) as a check; the model was **not** changed afterwards, to keep the hold-out untouched. Change = MAE relative to the reference design, with the Diebold–Mariano p-value. Source: `outputs/ablation.csv`.
+
+| Group | Add to core: Δ MAE 1w / 4w | DM p 1w / 4w | Leave out of all: Δ MAE 1w / 4w | DM p 1w / 4w | Decision (52 weeks) | Seven-year check |
+|---|---|---|---|---|---|---|
+| Calendar (Ramadan, Lebaran, holidays) | −0.6% / 0.0% | 0.41 / 1.00 | +1.1% / **+4.3%** | 0.088 / **0.029** | Keep | Confirmed (significant at 4w) |
+| Supply chain (producer, wholesale) | **−0.5%** / −0.7% | **0.035** / 0.23 | +0.5% / +0.2% | 0.073 / 0.78 | Keep | Confirmed (significant at 1w) |
+| Heat stress | **+0.4%** / +0.2% | **0.043** / 0.43 | +0.4% / +0.4% | 0.10 / 0.38 | Keep | **Not confirmed**: mixed signs |
+| Global feed prices | **+2.0% / +6.7%** | **0.013 / 0.024** | −1.6% / −3.1% | **0.018** / 0.16 | Drop | Confirmed harmful |
+| Rainfall | +0.4% / +0.1% | 0.13 / 0.81 | −0.1% / +0.6% | 0.63 / 0.25 | Drop | Confirmed no effect |
+| Egg price | +0.1% / +0.2% | 0.48 / 0.54 | +0.1% / +0.3% | 0.64 / 0.46 | Drop | Confirmed no effect |
 
 **Why does feed hurt, when the literature says feed drives broiler prices?** The two findings are compatible:
 
@@ -76,52 +83,88 @@ A domestic, weekly feed-price series would be the right test of this hypothesis.
 
 **Rainfall** shows no effect, consistent with the absence of chicken-specific evidence in the literature (Section 7 of [literature.md](literature.md)).
 
-**Final production feature set:** `core_price`, `calendar`, `supply_chain`, `weather_heat`. Hyper-parameters are the values declared before any testing. Four pre-declared alternatives (`scripts/tune.py`) differed by less than ±0.15 MAPE points, so we kept the originals rather than pick the best on the evaluation window.
+**Final production feature set:** `core_price`, `calendar`, `supply_chain`, `weather_heat` (heat stress is kept because it was selected on the 52-week window, but the seven-year check does not support it; dropping it is a candidate for the next model version, to be validated on future data). Hyper-parameters are the values declared before any testing. Four pre-declared alternatives (`scripts/tune.py`) differed by less than ±0.15 MAPE points, so we kept the originals rather than pick the best on the evaluation window.
 
 ## 7. Results
 
-Backtest: 156 weekly origins (Oct 2023 – Nov 2026) × 34 provinces, after 13 warm-up origins. Source: `outputs/backtest_metrics.csv`.
+Backtest: 360 weekly origins (Dec 2019 – Nov 2026) × 34 provinces, after 13 warm-up origins. Source: `outputs/backtest_metrics.csv`.
 
-| Horizon | Model | MAE (Rp/kg) | MAPE | Error vs naive | DM p | Direction | 80% PI coverage |
+| Horizon | Model | MAE (Rp/kg) | MAPE | Error vs naive | DM p | Direction | 80% PI coverage (CQR) |
 |---|---|---|---|---|---|---|---|
-| 1 w | XGBoost | 861 | 2.29% | −4.9% | < 0.001 | 59.2% | 78.3% |
-| 1 w | Naive | 906 | 2.42% | | | | |
-| 1 w | Seasonal naive | 1,299 | 3.46% | +43.4% | < 0.001 | 50.2% | |
-| 2 w | XGBoost | 1,377 | 3.68% | −3.1% | 0.143 | 58.8% | 77.0% |
-| 2 w | Naive | 1,422 | 3.82% | | | | |
-| 4 w | XGBoost | 1,903 | 5.07% | −4.4% | 0.305 | 61.8% | 75.9% |
-| 4 w | Naive | 1,991 | 5.34% | | | | |
-| 8 w | XGBoost | 2,494 | 6.65% | −4.4% | 0.537 | 63.1% | 72.7% |
-| 8 w | Naive | 2,609 | 7.00% | | | | |
+| 1 w | XGBoost | 959 | 2.68% | −3.7% | 0.006 | 58.4% | 83.0% |
+| 1 w | Naive | 996 | 2.79% | | | | |
+| 1 w | Seasonal naive | 1,460 | 4.08% | +46.5% | < 0.001 | 50.3% | |
+| 2 w | XGBoost | 1,525 | 4.26% | −2.4% | 0.307 | 58.9% | 83.1% |
+| 2 w | Naive | 1,562 | 4.39% | | | | |
+| 4 w | XGBoost | 2,061 | 5.72% | −6.6% | 0.048 | 62.4% | 83.8% |
+| 4 w | Naive | 2,208 | 6.22% | | | | |
+| 8 w | XGBoost | 2,586 | 7.15% | −12.4% | 0.030 | 66.2% | 82.5% |
+| 8 w | Naive | 2,953 | 8.32% | | | | |
 
 ### Untouched hold-out
 
-The feature groups were chosen on the most recent 52 origins (Section 6), so those weeks are not a clean test. For each horizon, the origins before its last 52 (roughly Oct 2023 – Nov 2025) were never used for any modelling decision. Source: `outputs/backtest_metrics_by_period.csv`.
+Feature groups were first chosen on the most recent 52 origins (Section 6), so those weeks are not a clean test. The older 308 origins per horizon (Dec 2019 – Nov 2025) were never used for any modelling decision. Source: `outputs/backtest_metrics_by_period.csv`.
 
 | Horizon | Error vs naive (hold-out) | DM p (hold-out) | Error vs naive (selection window) | DM p (selection window) |
 |---|---|---|---|---|
-| 1 w | −4.7% | 0.003 | −5.2% | 0.059 |
-| 2 w | −3.9% | 0.046 | −1.8% | 0.71 |
-| 4 w | −3.8% | 0.25 | −5.3% | 0.60 |
-| 8 w | +2.5% | 0.72 | −14.2% | 0.32 |
+| 1 w | −3.6% | 0.019 | −4.5% | 0.082 |
+| 2 w | −2.4% | 0.35 | −2.0% | 0.67 |
+| 4 w | −6.8% | 0.060 | −5.8% | 0.56 |
+| 8 w | −12.1% | 0.059 | −14.1% | 0.32 |
+
+### By year
+
+Error vs naive by year of the forecast origin (negative = better). Source: `outputs/backtest_metrics_by_year.csv`.
+
+| Horizon | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 | 2026 |
+|---|---|---|---|---|---|---|---|
+| 1 w | −0.2% | −4.9% | −3.8% | −4.7% | −4.3%* | −3.1% | −7.1%* |
+| 2 w | +3.9% | −3.6% | −9.2% | +0.5% | −5.2% | −1.2% | −4.9% |
+| 4 w | −13.1% | −2.3% | −9.8% | −1.5% | −8.4%* | +0.7% | −8.7% |
+| 8 w | −29.6% | −2.9% | −9.3% | −17.1%* | −7.7% | +15.0% | −20.6% |
+
+\* DM p < 0.05 within that year. 2026 covers 38–45 origins.
+
+### Prediction intervals
+
+Source: `outputs/interval_metrics.csv`. Lower interval score is better.
+
+| Horizon | Scaled conformal: coverage / width / score | Quantile regression (raw) | CQR |
+|---|---|---|---|
+| 1 w | 80.0% / 9.3% / 4,720 | 70.0% / 6.6% / 4,749 | **83.0% / 9.1% / 4,620** |
+| 2 w | 79.9% / 15.4% / 7,541 | 65.5% / 9.5% / 7,398 | **83.1% / 14.1% / 7,026** |
+| 4 w | 77.8% / 20.8% / 10,410 | 61.0% / 11.7% / 10,375 | **83.8% / 19.6% / 9,510** |
+| 8 w | 74.8% / 25.0% / 13,276 | 53.3% / 12.7% / 13,570 | **82.5% / 23.4% / 11,703** |
+
+Raw quantile regression is far too narrow. CQR is both narrower than scaled conformal and closer to (slightly above) nominal coverage, so its interval score is 2–12% lower; it is now the production interval. The quantile model's median is also a slightly better point forecast than the pseudo-Huber model (MAPE 2.64% vs 2.68% at 1 week, 7.01% vs 7.15% at 8 weeks); we report this but keep the pre-declared point model.
+
+### National forecasts and reconciliation
+
+Source: `outputs/hierarchy_metrics.csv`. The NNLS weights reproduce the published national average with 0.05% mean absolute error (weights sum to 0.99; the largest is West Java at 5.2%).
+
+| Horizon | Naive MAPE | Direct | Bottom-up | Reconciled | Reconciled vs naive (DM p) |
+|---|---|---|---|---|---|
+| 1 w | 1.78% | 1.64% | 1.61% | **1.58%** | −11.8% (0.011) |
+| 2 w | 2.82% | 2.74% | 2.70% | **2.69%** | −4.7% (0.42) |
+| 4 w | 4.07% | 3.89% | 3.82% | **3.80%** | −5.8% (0.47) |
+| 8 w | 5.87% | **5.25%** | 5.34% | 5.30% | −8.8% (0.39) |
+
+Reconciliation leaves province accuracy essentially unchanged (1-week MAPE 2.681% before and after) while making province and national forecasts consistent with each other.
 
 ### Interpretation
 
-- **1 week ahead:** a small (~5%) but **statistically significant** improvement over naive in both periods. This is the model's dependable use case.
-- **2 weeks:** better than naive in both periods, significant on the hold-out (p = 0.046).
-- **4 weeks:** better than naive in both periods (−3.8% / −5.3%) but not significant.
-- **8 weeks:** the large gain in the recent window does **not** replicate on the hold-out (+2.5% worse than naive). At 4–8 weeks the point forecast should be treated as indicative and the interval used for planning. The dashboard shows a per-horizon reliability notice based on the hold-out.
-- **Seasonal naive** is far worse than naive at every horizon. Chicken price seasonality is driven by the moving Hijri calendar, not the Gregorian year, which is exactly why the Hijri-based calendar features are needed.
-- **Intervals** are well calibrated up to 4 weeks (76–78% for a nominal 80%) and somewhat too narrow at 8 weeks (73%).
-- **Direction:** the model calls the direction of the price move correctly 59–63% of the time, versus 50% for a coin flip.
+- **Over seven years the model beats naive at every horizon**, significantly at 1, 4 and 8 weeks. The 2-week horizon is not significant.
+- **The edge varies by year.** 2025 was poor at long horizons (8 weeks: 15% worse than naive), 2020 and 2023 were strong. The earlier one-year evaluation, which suggested no skill at 8 weeks, was an unlucky window.
+- **Seasonal naive** is far worse than naive at every horizon: chicken price seasonality follows the moving Hijri calendar, not the Gregorian year.
+- **Direction:** 58–66% correct, versus 50% for a coin flip.
 
 ## 8. Limitations
 
 - **Weekly chicken prices are close to a random walk.** The model's edge over "price stays the same" is real but modest. Treat forecasts as a slightly better-informed baseline with honest uncertainty bands, not as a crystal ball.
 - **Missing drivers.** DOC prices, chick-in volumes and government supply-control interventions are significant in the literature but have no public weekly data.
 - **Weather at the province capital** is a coarse proxy for conditions at farms, which are often in other districts and in closed houses.
-- **Global feed benchmarks** don't capture Indonesian maize import policy, which can make domestic maize diverge sharply from world prices.
-- **One evaluation window.** The backtest covers the most recent year. Different regimes (e.g., COVID-19 in 2020) may behave differently.
+- **Global feed benchmarks** need not track domestic Indonesian maize prices.
+- **Year-to-year variation.** The backtest covers seven years (2020–2026), and the model's edge varies a lot between years; any single year can mislead.
 - **PIHPS revisions.** The cached snapshot is what PIHPS served on the download date. Past values may be revised later.
 
 ## References
