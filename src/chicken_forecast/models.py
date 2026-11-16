@@ -24,6 +24,7 @@ from chicken_forecast.config import (
     BACKTEST_WEEKS,
     HORIZONS,
     INTERVAL_COVERAGE,
+    QUANTILES,
     TARGET_SERIES,
     XGB_PARAMS,
 )
@@ -51,6 +52,31 @@ def fit_model(train: pd.DataFrame, features: list[str] = FEATURES) -> xgb.XGBReg
         sample_weight=_sample_weight(train["week"], train["week"].max()),
     )
     return model
+
+
+def fit_quantile_model(train: pd.DataFrame, features: list[str] = FEATURES) -> xgb.XGBRegressor:
+    """One multi-output XGBoost model for the 10th, 50th and 90th percentiles.
+
+    Same trees and data as the point model, but trained with the pinball
+    (quantile) loss, so it can learn uncertainty that differs by province,
+    season and recent history instead of scaling one residual distribution.
+    """
+    train = train.dropna(subset=["y", MIN_HISTORY_COL])
+    params = {k: v for k, v in XGB_PARAMS.items() if k not in ("objective", "huber_slope")}
+    model = xgb.XGBRegressor(
+        **params, objective="reg:quantileerror", quantile_alpha=np.array(QUANTILES)
+    )
+    model.fit(
+        train[features],
+        train["y"],
+        sample_weight=_sample_weight(train["week"], train["week"].max()),
+    )
+    return model
+
+
+def predict_quantiles(model: xgb.XGBRegressor, X: pd.DataFrame) -> np.ndarray:
+    """Quantile predictions, sorted per row so the quantiles never cross."""
+    return np.sort(model.predict(X), axis=1)
 
 
 def seasonal_naive_change(feats: pd.DataFrame, horizon: int) -> pd.Series:
@@ -81,19 +107,28 @@ def backtest(
     feats: pd.DataFrame,
     features: list[str] = FEATURES,
     horizons: list[int] = HORIZONS,
+    quantiles: bool = False,
+    extra_feats: pd.DataFrame | None = None,
+    n_weeks: int = BACKTEST_WEEKS,
 ) -> pd.DataFrame:
-    """Rolling-origin evaluation over the last BACKTEST_WEEKS (+ warm-up) weeks.
+    """Rolling-origin evaluation over the last ``n_weeks`` (+ warm-up) weeks.
 
     For each block of REFIT_EVERY origins the model is retrained using only
     rows whose *target* week is on or before the block's first origin, i.e.
     exactly the information available at that time.
+
+    quantiles:   also fit the quantile model in every block (q10/q50/q90).
+    extra_feats: origin features of extra series (e.g. the national average)
+                 that are not trained on but are predicted by the same block
+                 models; returned in ``bt.attrs["extra"]``.
     """
     last_week = feats["week"].max()
-    results = []
+    results, extra_results = [], []
     for h in horizons:
         sup = make_supervised(feats, h)
+        ex_sup = make_supervised(extra_feats, h) if extra_feats is not None else None
         last_origin = last_week - pd.Timedelta(weeks=h)
-        n_origins = BACKTEST_WEEKS + CALIBRATION_WARMUP
+        n_origins = n_weeks + CALIBRATION_WARMUP
         origins = pd.date_range(end=last_origin, periods=n_origins, freq="7D")
         sup["pred_snaive"] = seasonal_naive_change(sup, h)
 
@@ -105,7 +140,17 @@ def backtest(
             test = sup[sup["week"].isin(block)].dropna(subset=["y", MIN_HISTORY_COL]).copy()
             test["pred_xgb"] = model.predict(test[features])
             test["scale"] = _scale(test, h)
+            if quantiles:
+                qm = fit_quantile_model(train, features)
+                q = predict_quantiles(qm, test[features])
+                test["q10"], test["q50"], test["q90"] = q[:, 0], q[:, 1], q[:, 2]
             results.append(test)
+            if ex_sup is not None:
+                ex = ex_sup[ex_sup["week"].isin(block)].dropna(subset=["y", MIN_HISTORY_COL]).copy()
+                if len(ex):
+                    ex["pred_xgb"] = model.predict(ex[features])
+                    ex["scale"] = _scale(ex, h)
+                    extra_results.append(ex)
         log.info("  backtest h=%d done", h)
 
     bt = pd.concat(results, ignore_index=True)
@@ -116,12 +161,24 @@ def backtest(
         "province", "week", "target_week", "horizon", TARGET_SERIES, "target_price",
         "y", "pred_xgb", "pred_naive", "pred_snaive", "scale", "lo", "hi", "is_warmup",
     ]
+    if quantiles:
+        keep += ["q10", "q50", "q90", "cqr_lo", "cqr_hi"]
     bt = bt[keep].rename(columns={"week": "origin_week", TARGET_SERIES: "last_price"})
     for m in ["xgb", "naive", "snaive"]:
         bt[f"price_{m}"] = bt["last_price"] * np.exp(bt[f"pred_{m}"])
     bt["price_lo"] = bt["last_price"] * np.exp(bt["lo"])
     bt["price_hi"] = bt["last_price"] * np.exp(bt["hi"])
-    return bt.sort_values(["horizon", "province", "origin_week"]).reset_index(drop=True)
+    if quantiles:
+        for c in ["q10", "q50", "q90", "cqr_lo", "cqr_hi"]:
+            bt[f"price_{c}"] = bt["last_price"] * np.exp(bt[c])
+    bt = bt.sort_values(["horizon", "province", "origin_week"]).reset_index(drop=True)
+    if extra_results:
+        ex = pd.concat(extra_results, ignore_index=True)
+        ex = ex[["province", "week", "target_week", "horizon", TARGET_SERIES, "target_price",
+                 "y", "pred_xgb", "scale"]].rename(columns={"week": "origin_week", TARGET_SERIES: "last_price"})
+        ex["price_xgb"] = ex["last_price"] * np.exp(ex["pred_xgb"])
+        bt.attrs["extra"] = ex
+    return bt
 
 
 def _sequential_intervals(bt: pd.DataFrame, horizons: list[int] = HORIZONS) -> pd.DataFrame:
@@ -135,6 +192,12 @@ def _sequential_intervals(bt: pd.DataFrame, horizons: list[int] = HORIZONS) -> p
     bt["norm_resid"] = (bt["y"] - bt["pred_xgb"]) / bt["scale"]
     bt["lo"] = np.nan
     bt["hi"] = np.nan
+    has_q = "q10" in bt.columns
+    if has_q:
+        # Conformalized quantile regression (CQR) conformity score
+        bt["cqr_score"] = np.maximum(bt["q10"] - bt["y"], bt["y"] - bt["q90"])
+        bt["cqr_lo"] = np.nan
+        bt["cqr_hi"] = np.nan
     for h in horizons:
         sub = bt[bt["horizon"] == h].sort_values("week")
         first_week = sub["week"].min()
@@ -142,13 +205,18 @@ def _sequential_intervals(bt: pd.DataFrame, horizons: list[int] = HORIZONS) -> p
         for o in sub["week"].unique():
             if o < warmup_end:
                 continue
-            known = sub[sub["target_week"] <= o]["norm_resid"].to_numpy()
+            known_mask = sub["target_week"] <= o
+            known = sub.loc[known_mask, "norm_resid"].to_numpy()
             if len(known) < 100:
                 continue
             q_lo, q_hi = interval_quantiles(known)
             idx = sub.index[sub["week"] == o]
             bt.loc[idx, "lo"] = bt.loc[idx, "pred_xgb"] + q_lo * bt.loc[idx, "scale"]
             bt.loc[idx, "hi"] = bt.loc[idx, "pred_xgb"] + q_hi * bt.loc[idx, "scale"]
+            if has_q:
+                adj = np.nanquantile(sub.loc[known_mask, "cqr_score"].to_numpy(), INTERVAL_COVERAGE)
+                bt.loc[idx, "cqr_lo"] = bt.loc[idx, "q10"] - adj
+                bt.loc[idx, "cqr_hi"] = bt.loc[idx, "q90"] + adj
     bt["is_warmup"] = bt["lo"].isna()
     return bt
 
@@ -187,6 +255,9 @@ def diebold_mariano(err_a: pd.DataFrame, err_b: pd.DataFrame, horizon: int) -> t
 def backtest_metrics(bt: pd.DataFrame) -> pd.DataFrame:
     """MAE / RMSE / MAPE per horizon and model, plus skill vs naive and coverage."""
     ev = bt[~bt["is_warmup"]]
+    # Production intervals: CQR when the quantile models were run (it scored
+    # best in interval_metrics), otherwise the scaled conformal interval.
+    lo_c, hi_c = ("price_cqr_lo", "price_cqr_hi") if "price_cqr_lo" in ev.columns else ("price_lo", "price_hi")
     rows = []
     for h, sub in ev.groupby("horizon"):
         actual = sub["target_price"]
@@ -206,7 +277,7 @@ def backtest_metrics(bt: pd.DataFrame) -> pd.DataFrame:
                     if m != "naive"
                     else np.nan,
                     "interval_coverage": (
-                        ((actual >= sub["price_lo"]) & (actual <= sub["price_hi"])).mean()
+                        ((actual >= sub[lo_c]) & (actual <= sub[hi_c])).mean()
                         if m == "xgb"
                         else np.nan
                     ),
@@ -217,6 +288,83 @@ def backtest_metrics(bt: pd.DataFrame) -> pd.DataFrame:
                 a = sub.assign(abs_err=(sub[f"price_{m}"] - actual).abs())
                 b = sub.assign(abs_err=(sub["price_naive"] - actual).abs())
                 rows[-1]["dm_vs_naive"], rows[-1]["dm_pvalue"] = diebold_mariano(a, b, int(h))
+    return pd.DataFrame(rows)
+
+
+def interval_metrics(bt: pd.DataFrame) -> pd.DataFrame:
+    """Compare 80% interval methods: coverage, width and the interval score.
+
+    Interval score (Gneiting & Raftery, 2007) for a central (1 - a) interval:
+    width + (2/a)(lo - y) if y < lo + (2/a)(y - hi) if y > hi. Lower is
+    better; it rewards narrow intervals but penalises misses.
+    """
+    a = 1 - INTERVAL_COVERAGE
+    ev = bt[~bt["is_warmup"]]
+    methods = [("Scaled conformal (residual quantiles)", "price_lo", "price_hi")]
+    if "price_q10" in ev.columns:
+        methods += [
+            ("Quantile regression (raw)", "price_q10", "price_q90"),
+            ("Conformalized quantile regression (CQR)", "price_cqr_lo", "price_cqr_hi"),
+        ]
+    rows = []
+    for h, sub in ev.groupby("horizon"):
+        y = sub["target_price"]
+        for name, lo_c, hi_c in methods:
+            lo, hi = sub[lo_c], sub[hi_c]
+            ok = lo.notna() & hi.notna()
+            lo, hi, yy = lo[ok], hi[ok], y[ok]
+            score = (hi - lo) + (2 / a) * (lo - yy).clip(lower=0) + (2 / a) * (yy - hi).clip(lower=0)
+            rows.append(
+                {
+                    "horizon": h,
+                    "method": name,
+                    "coverage": ((yy >= lo) & (yy <= hi)).mean(),
+                    "mean_width_pct": ((hi - lo) / yy).mean() * 100,
+                    "interval_score": score.mean(),
+                    "n": int(ok.sum()),
+                }
+            )
+        if "price_q50" in sub.columns:
+            naive_mae = (sub["price_naive"] - y).abs().mean()
+            for name, col in [("Point model (pseudo-Huber)", "price_xgb"), ("Quantile model median (q50)", "price_q50")]:
+                rows.append(
+                    {
+                        "horizon": h,
+                        "method": name,
+                        "point_MAE": (sub[col] - y).abs().mean(),
+                        "point_MAPE": ((sub[col] - y).abs() / y).mean() * 100,
+                        "point_skill_vs_naive": 1 - (sub[col] - y).abs().mean() / naive_mae,
+                        "n": len(sub),
+                    }
+                )
+    return pd.DataFrame(rows)
+
+
+def metrics_by_year(bt: pd.DataFrame) -> pd.DataFrame:
+    """Model vs naive by calendar year of the forecast origin."""
+    ev = bt[~bt["is_warmup"]].copy()
+    ev["year"] = ev["origin_week"].dt.year
+    rows = []
+    for (h, yr), sub in ev.groupby(["horizon", "year"]):
+        if sub["origin_week"].nunique() < 26:
+            continue
+        y = sub["target_price"]
+        a = sub.assign(abs_err=(sub["price_xgb"] - y).abs())
+        b = sub.assign(abs_err=(sub["price_naive"] - y).abs())
+        dm, p = diebold_mariano(a, b, int(h))
+        rows.append(
+            {
+                "horizon": h,
+                "year": yr,
+                "origins": sub["origin_week"].nunique(),
+                "MAPE_model": (a["abs_err"] / y).mean() * 100,
+                "MAPE_naive": (b["abs_err"] / y).mean() * 100,
+                "skill_vs_naive": 1 - a["abs_err"].mean() / b["abs_err"].mean(),
+                "dm_pvalue": p,
+                "direction_acc": (np.sign(sub["pred_xgb"]) == np.sign(sub["y"])).mean(),
+                "interval_coverage": ((y >= sub["price_lo"]) & (y <= sub["price_hi"])).mean(),
+            }
+        )
     return pd.DataFrame(rows)
 
 
@@ -241,6 +389,13 @@ def fit_final_and_forecast(
         norm = ((resid["y"] - resid["pred_xgb"]) / resid["scale"]).to_numpy()
         q_lo, q_hi = interval_quantiles(norm)
         scale = _scale(latest, h)
+        cqr = None
+        if "q10" in resid.columns:
+            qm = fit_quantile_model(sup, features)
+            q = predict_quantiles(qm, latest[features])
+            score = np.maximum(resid["q10"] - resid["y"], resid["y"] - resid["q90"]).to_numpy()
+            adj = np.nanquantile(score, INTERVAL_COVERAGE)
+            cqr = (q[:, 0] - adj, q[:, 1], q[:, 2] + adj)
 
         out = pd.DataFrame(
             {
@@ -254,6 +409,14 @@ def fit_final_and_forecast(
                 "hi": latest[TARGET_SERIES].values * np.exp(latest["pred"].values + q_hi * scale),
             }
         )
+        if cqr is not None:
+            # Publish the CQR interval as the forecast interval; keep the
+            # scaled-conformal one alongside for comparison.
+            last = latest[TARGET_SERIES].values
+            out["conformal_lo"], out["conformal_hi"] = out["lo"], out["hi"]
+            out["lo"] = last * np.exp(cqr[0])
+            out["q50"] = last * np.exp(cqr[1])
+            out["hi"] = last * np.exp(cqr[2])
         out["pct_change"] = (out["forecast"] / out["last_price"] - 1) * 100
         forecasts.append(out)
         origin_rows[h] = latest

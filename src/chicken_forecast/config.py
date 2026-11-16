@@ -53,8 +53,10 @@ NATIONAL = "Semua Provinsi"  # PIHPS label for the national average
 HORIZONS = [1, 2, 4, 8]  # forecast horizons in weeks
 WEEK_RULE = "W-SUN"  # weeks end on Sunday, labelled by the Sunday date
 
-BACKTEST_WEEKS = 156  # rolling-origin evaluation window: 3 years of weekly origins
+BACKTEST_WEEKS = 360  # rolling-origin evaluation window: ~7 years of weekly origins (from Dec 2019)
+SELECTION_WEEKS = 52  # most recent origins used for feature selection; older ones = untouched hold-out
 INTERVAL_COVERAGE = 0.80  # nominal coverage of the prediction intervals
+QUANTILES = (0.1, 0.5, 0.9)  # quantile-regression levels (10th/90th = the 80% interval)
 
 XGB_PARAMS = {
     # Pseudo-Huber on log changes: squared loss for normal weeks, linear for

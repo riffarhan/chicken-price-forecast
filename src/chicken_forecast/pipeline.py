@@ -11,11 +11,32 @@ import pandas as pd
 import shap
 import xgboost as xgb
 
-from chicken_forecast import __version__
-from chicken_forecast.config import BACKTEST_WEEKS, HORIZONS, MODELS_DIR, OUTPUTS_DIR, TARGET_SERIES
+from chicken_forecast import __version__, hierarchy
+from chicken_forecast.config import (
+    BACKTEST_WEEKS,
+    HORIZONS,
+    MODELS_DIR,
+    NATIONAL,
+    OUTPUTS_DIR,
+    SELECTION_WEEKS,
+    TARGET_SERIES,
+)
 from chicken_forecast.data.build import load_weekly_panel
-from chicken_forecast.features import FEATURE_LABELS, FEATURES, SELECTED_GROUPS, origin_features
-from chicken_forecast.models import backtest, backtest_metrics, fit_final_and_forecast
+from chicken_forecast.features import (
+    FEATURE_LABELS,
+    FEATURES,
+    SELECTED_GROUPS,
+    make_supervised,
+    origin_features,
+)
+from chicken_forecast.models import (
+    _scale,
+    backtest,
+    backtest_metrics,
+    fit_final_and_forecast,
+    interval_metrics,
+    metrics_by_year,
+)
 
 log = logging.getLogger(__name__)
 
@@ -56,6 +77,34 @@ def global_importance(models: dict[int, xgb.XGBRegressor], origin_rows) -> pd.Da
     return pd.DataFrame(rows).sort_values(["horizon", "mean_abs_impact_pct"], ascending=[True, False])
 
 
+def national_forecast(models, nat_feats, forecast, origin_rows, panel, nat_panel, provinces) -> pd.DataFrame:
+    """Direct, bottom-up and reconciled national forecasts from the latest week."""
+    last_week = nat_feats["week"].max()
+    w = hierarchy.estimate_weights(panel, nat_panel, last_week, provinces)
+    rows = []
+    for h, model in models.items():
+        sup = make_supervised(nat_feats, h)
+        row = sup[sup["week"] == last_week]
+        if row.empty:
+            continue
+        last = float(row[TARGET_SERIES].iloc[0])
+        direct = last * float(np.exp(model.predict(row[FEATURES])[0]))
+        fh = forecast[forecast["horizon"] == h].set_index("province").reindex(provinces)
+        base = fh["forecast"].to_numpy()
+        orow = origin_rows[h].set_index("province").reindex(provinces)
+        var_p = (_scale(orow, h) * base) ** 2  # same variance proxy as in the backtest
+        var_n = (float(_scale(row, h)[0]) * direct) ** 2
+        rec = hierarchy.reconcile(base, var_p, direct, var_n, w)
+        rows.append(
+            {
+                "horizon": h, "origin_week": last_week, "target_week": row["target_week"].iloc[0],
+                "last_price": last, "direct": direct, "bottom_up": float(w @ base),
+                "reconciled": float(w @ rec),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def run() -> dict:
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
@@ -65,10 +114,24 @@ def run() -> dict:
     log.info("Engineering features for %d provinces", len(provinces))
     feats = origin_features(panel, provinces)
 
-    log.info("Running rolling-origin backtest")
-    bt = backtest(feats)
+    log.info("Building the national series")
+    nat_panel = hierarchy.build_national_panel(panel)
+    nat_feats = hierarchy.national_features(origin_features(nat_panel, [NATIONAL]))
+
+    log.info("Running rolling-origin backtest (%d weeks, with quantile models)", BACKTEST_WEEKS)
+    bt = backtest(feats, quantiles=True, extra_feats=nat_feats)
     metrics = backtest_metrics(bt)
     log.info("\n%s", metrics.round(3).to_string(index=False))
+
+    intervals = interval_metrics(bt)
+    log.info("\n%s", intervals.round(3).to_string(index=False))
+    by_year = metrics_by_year(bt)
+    log.info("\n%s", by_year.round(3).to_string(index=False))
+
+    log.info("Evaluating national and reconciled forecasts")
+    hier_metrics, nat_bt = hierarchy.evaluate(bt, panel, nat_panel)
+    wfit = hierarchy.weight_fit(panel, nat_panel)
+    log.info("National weights: %s", wfit)
 
     log.info("Training final models and forecasting")
     models, forecast, origin_rows = fit_final_and_forecast(feats, bt)
@@ -81,15 +144,22 @@ def run() -> dict:
 
     # Feature groups were chosen on the most recent 52 origins, so report the
     # earlier origins separately: they were never used for any modelling decision.
-    split = bt.groupby("horizon")["origin_week"].transform("max") - pd.Timedelta(weeks=52)
+    split = bt.groupby("horizon")["origin_week"].transform("max") - pd.Timedelta(weeks=SELECTION_WEEKS)
     recent = bt["origin_week"] > split
     by_period = pd.concat(
         [
             backtest_metrics(bt[~recent]).assign(period="untouched hold-out (older origins)"),
-            backtest_metrics(bt[recent]).assign(period="selection window (last 52 origins)"),
+            backtest_metrics(bt[recent]).assign(period=f"selection window (last {SELECTION_WEEKS} origins)"),
         ]
     )
     by_period.to_csv(OUTPUTS_DIR / "backtest_metrics_by_period.csv", index=False, float_format="%.4f")
+    by_year.to_csv(OUTPUTS_DIR / "backtest_metrics_by_year.csv", index=False, float_format="%.4f")
+    intervals.to_csv(OUTPUTS_DIR / "interval_metrics.csv", index=False, float_format="%.4f")
+    hier_metrics.to_csv(OUTPUTS_DIR / "hierarchy_metrics.csv", index=False, float_format="%.4f")
+    nat_bt.to_csv(OUTPUTS_DIR / "national_backtest.csv", index=False, float_format="%.2f")
+    national_forecast(models, nat_feats, forecast, origin_rows, panel, nat_panel, provinces).to_csv(
+        OUTPUTS_DIR / "forecast_national.csv", index=False, float_format="%.2f"
+    )
 
     bt.to_csv(OUTPUTS_DIR / "backtest_predictions.csv", index=False, float_format="%.4f")
     metrics.to_csv(OUTPUTS_DIR / "backtest_metrics.csv", index=False, float_format="%.4f")
@@ -112,6 +182,7 @@ def run() -> dict:
         "backtest_mape": {int(h): round(float(v), 3) for h, v in xgb_m["MAPE"].items()},
         "backtest_skill_vs_naive": {int(h): round(float(v), 3) for h, v in xgb_m["skill_vs_naive"].items()},
         "features": FEATURES,
+        "national_weights": wfit,
     }
     (OUTPUTS_DIR / "run_metadata.json").write_text(json.dumps(meta, indent=2))
     log.info("Outputs written to %s", OUTPUTS_DIR)

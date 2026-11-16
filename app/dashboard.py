@@ -39,6 +39,13 @@ C_UP, C_DOWN = "#dc2626", "#16a34a"
 # ---------------------------------------------------------------------------
 # Data
 # ---------------------------------------------------------------------------
+def _use_cqr(bt: pd.DataFrame) -> pd.DataFrame:
+    """Show the CQR intervals (best interval score in the backtest) when available."""
+    if "price_cqr_lo" in bt.columns:
+        bt["price_lo"], bt["price_hi"] = bt["price_cqr_lo"], bt["price_cqr_hi"]
+    return bt
+
+
 @st.cache_data(ttl=3600)
 def load():
     need = ["forecast_latest.csv", "backtest_metrics.csv", "backtest_predictions.csv",
@@ -49,7 +56,8 @@ def load():
         "panel": pd.read_csv(WEEKLY_PANEL_PATH, parse_dates=["week"]),
         "forecast": pd.read_csv(OUTPUTS_DIR / "forecast_latest.csv", parse_dates=["origin_week", "target_week"]),
         "metrics": pd.read_csv(OUTPUTS_DIR / "backtest_metrics.csv"),
-        "backtest": pd.read_csv(OUTPUTS_DIR / "backtest_predictions.csv", parse_dates=["origin_week", "target_week"]),
+        "backtest": _use_cqr(pd.read_csv(OUTPUTS_DIR / "backtest_predictions.csv",
+                                         parse_dates=["origin_week", "target_week"])),
         "drivers": pd.read_csv(OUTPUTS_DIR / "forecast_drivers.csv"),
         "importance": pd.read_csv(OUTPUTS_DIR / "feature_importance.csv"),
         "meta": json.loads((OUTPUTS_DIR / "run_metadata.json").read_text()),
@@ -143,9 +151,14 @@ if _bp_path.exists():
             st.success(f"**Reliable horizon.** On older data never used to build the model, {horizon}-week "
                        f"forecasts had {_skill * 100:.1f}% lower error than 'price stays the same' "
                        f"(p = {_pv:.3f}).")
+        elif _skill > 0:
+            st.info(f"**Better, but not proven.** On older data never used to build the model, {horizon}-week "
+                    f"forecasts had {_skill * 100:.1f}% lower error than 'price stays the same', but the "
+                    f"difference is not statistically significant (p = {_pv:.2f}). Read the interval as well "
+                    f"as the point.")
         else:
             st.warning(f"**Indicative only.** On older data never used to build the model, {horizon}-week "
-                       f"forecasts were not reliably better than 'price stays the same' "
+                       f"forecasts were not better than 'price stays the same' "
                        f"({-_skill * 100:+.1f}% error, p = {_pv:.2f}). Use the interval, not the point.")
 
 tab_fc, tab_map, tab_drv, tab_acc, tab_data = st.tabs(
@@ -205,6 +218,21 @@ with tab_fc:
 # Map / all provinces tab
 # ---------------------------------------------------------------------------
 with tab_map:
+    _nat_path = OUTPUTS_DIR / "forecast_national.csv"
+    if _nat_path.exists():
+        _nat = pd.read_csv(_nat_path, parse_dates=["target_week"])
+        _nh = _nat[_nat["horizon"] == horizon]
+        if len(_nh):
+            _n = _nh.iloc[0]
+            n1, n2, n3 = st.columns(3)
+            n1.metric("National average · latest week", rp(_n["last_price"]))
+            n2.metric(f"National forecast, w/e {_n['target_week']:%d %b %Y}", rp(_n["reconciled"]),
+                      f"{(_n['reconciled'] / _n['last_price'] - 1) * 100:+.1f}%", delta_color="inverse",
+                      help="Reconciled forecast: consistent with the 34 province forecasts under the "
+                           "province weights implied by the PIHPS national average.")
+            n3.metric("Direct vs bottom-up", f"{rp(_n['direct'])} / {rp(_n['bottom_up'])}",
+                      help="Direct: the model applied to the national series. Bottom-up: weighted sum of "
+                           "province forecasts.")
     st.subheader(f"Expected change over the next {horizon} week(s)")
     allp = fc_h.copy()
     if D["locations"] is not None:
@@ -313,6 +341,22 @@ with tab_acc:
     prov_err = (bt[(bt["horizon"] == horizon) & (~bt["is_warmup"])]
                 .assign(ape=lambda x: (x["price_xgb"] - x["target_price"]).abs() / x["target_price"] * 100)
                 .groupby("province")["ape"].mean().sort_values())
+    _by_year_path = OUTPUTS_DIR / "backtest_metrics_by_year.csv"
+    if _by_year_path.exists():
+        st.subheader(f"Is the edge stable over time? ({horizon}-week horizon)")
+        _by = pd.read_csv(_by_year_path)
+        _by = _by[_by["horizon"] == horizon].copy()
+        _by["MAE vs naive %"] = -_by["skill_vs_naive"] * 100
+        _by["significant"] = _by["dm_pvalue"] < 0.05
+        figy = px.bar(_by, x="year", y="MAE vs naive %", color="significant",
+                      color_discrete_map={True: C_MODEL, False: C_NEUTRAL},
+                      hover_data={"dm_pvalue": ":.3f", "MAPE_model": ":.2f", "MAPE_naive": ":.2f",
+                                  "significant": False})
+        figy.add_hline(y=0, line_color=C_NEUTRAL)
+        figy.update_layout(height=300, xaxis_title=None, yaxis_title="MAE vs naive (%), below 0 = better",
+                           legend_title="p < 0.05", margin=dict(t=10))
+        st.plotly_chart(figy, use_container_width=True)
+
     with st.expander("MAPE by province"):
         st.bar_chart(prov_err, horizontal=True, height=700)
 
