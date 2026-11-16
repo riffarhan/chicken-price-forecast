@@ -1,0 +1,35 @@
+province,city,geocoded_name,admin1,latitude,longitude,feature_code
+Aceh,Banda Aceh,Banda Aceh,Special Region of Aceh,5.54167,95.33333,PPLA
+Sumatera Utara,Medan,Medan,North Sumatra,3.58333,98.66667,PPLA
+Sumatera Barat,Padang,Padang,West Sumatra,-0.94924,100.35427,PPLA
+Riau,Pekanbaru,Pekanbaru,Riau,0.51667,101.44167,PPLA
+Kepulauan Riau,Tanjung Pinang,Tanjung Pinang,Riau Islands,0.91667,104.45833,PPLA2
+Jambi,Jambi,Jambi City,Jambi,-1.6,103.61667,PPLA
+Bengkulu,Bengkulu,Bengkulu,Bengkulu,-3.80044,102.26554,PPLA
+Sumatera Selatan,Palembang,Palembang,South Sumatra,-2.91673,104.7458,PPLA
+Kepulauan Bangka Belitung,Pangkalpinang,Pangkalpinang,Bangka–Belitung Islands,-2.12914,106.11377,PPLA
+Lampung,Bandar Lampung,Bandar Lampung,Lampung,-5.42917,105.26111,PPLA
+Banten,Serang,Serang,Banten,-6.11528,106.15417,PPLA
+DKI Jakarta,Jakarta,Jakarta,Jakarta Special Capital Region,-6.21462,106.84513,PPLC
+Jawa Barat,Bandung,Bandung,West Java,-6.92222,107.60694,PPLA
+Jawa Tengah,Semarang,Semarang,Central Java,-6.99306,110.42083,PPLA
+DI Yogyakarta,Yogyakarta,Yogyakarta,Special Region of Yogyakarta,-7.80139,110.36472,PPLA
+Jawa Timur,Surabaya,Surabaya,East Java,-7.24917,112.75083,PPLA
+Bali,Denpasar,Denpasar,Bali,-8.65,115.21667,PPLA
+Nusa Tenggara Barat,Mataram,Mataram,West Nusa Tenggara,-8.58333,116.11667,PPLA
+Nusa Tenggara Timur,Kupang,Kupang,East Nusa Tenggara,-10.17083,123.60694,PPLA
+Kalimantan Barat,Pontianak,Pontianak,West Kalimantan,-0.03194,109.325,PPLA
+Kalimantan Tengah,Palangkaraya,Palangkaraya,Central Kalimantan,-2.20833,113.91667,PPLA
+Kalimantan Selatan,Banjarmasin,Banjarmasin,South Kalimantan,-3.31987,114.59075,PPLA2
+Kalimantan Timur,Samarinda,Samarinda,East Kalimantan,-0.49167,117.14583,PPLA
+Kalimantan Utara,Tanjung Selor,Tanjung Selor,North Kalimantan,2.8375,117.36528,PPLA
+Sulawesi Utara,Manado,Manado,North Sulawesi,1.48218,124.84892,PPLA
+Gorontalo,Gorontalo,Gorontalo,Gorontalo,0.5375,123.0625,PPLA
+Sulawesi Tengah,Palu,Palu,Central Sulawesi,-0.90833,119.87083,PPLA
+Sulawesi Barat,Mamuju,Mamuju,West Sulawesi,-2.68056,118.88611,PPLA
+Sulawesi Selatan,Makassar,Makassar,South Sulawesi,-5.14861,119.43194,PPLA
+Sulawesi Tenggara,Kendari,Kendari,Southeast Sulawesi,-3.9778,122.51507,PPLA
+Maluku,Ambon,Ambon City,Maluku,-3.69583,128.18333,PPLA
+Maluku Utara,Ternate,Ternate,North Maluku,0.79065,127.38424,PPL
+Papua,Jayapura,Jayapura,Special Region of Papua,-2.53371,140.71812,PPLA
+Papua Barat,Manokwari,Manokwari,West Papua,-0.86291,134.06403,PPLA

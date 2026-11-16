@@ -1,36 +1,44 @@
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
 *.egg-info/
-*.egg
 dist/
 build/
+.pytest_cache/
+.ruff_cache/
 
-# Virtual environments
+# Virtual environments (.nosync keeps iCloud Drive from syncing it)
 venv/
+.venv
 .venv/
+.venv.nosync/
 env/
 
-# IDE
+# IDE / OS
 .vscode/
 .idea/
 *.swp
-*.swo
-
-# OS
 .DS_Store
 Thumbs.db
 
-# Generated artifacts (recreated by running the pipeline)
-data/*.csv
-models/*.json
-outputs/
+# Trained models are rebuilt by `chicken-forecast train`
+models/*
+!models/.gitkeep
+
+# Logs
 logs/
 
 # Jupyter
 .ipynb_checkpoints/
 
-# Environment
+# Secrets
 .env
 .env.local
+.streamlit/secrets.toml
+
+# NOTE: data/raw, data/processed and outputs/ ARE committed on purpose:
+# the raw PIHPS snapshot makes results reproducible, and committed outputs
+# let the dashboard run (or deploy to Streamlit Cloud) without retraining.
+
+# Paper PDFs are copyrighted: keep locally, cite in docs/literature.md
+docs/papers/*.pdf
