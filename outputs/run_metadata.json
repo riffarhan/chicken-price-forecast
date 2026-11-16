@@ -1,0 +1,71 @@
+{
+  "version": "2.0.0",
+  "run_at_utc": "2026-11-16T11:33:45+00:00",
+  "data_first_week": "2018-01-07",
+  "data_last_week": "2026-11-15",
+  "n_provinces": 34,
+  "n_weekly_rows": 15742,
+  "target": "chicken_retail",
+  "horizons": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "backtest_weeks": 156,
+  "feature_groups": [
+    "core_price",
+    "calendar",
+    "supply_chain",
+    "weather_heat"
+  ],
+  "backtest_mape": {
+    "1": 2.29,
+    "2": 3.676,
+    "4": 5.069,
+    "8": 6.652
+  },
+  "backtest_skill_vs_naive": {
+    "1": 0.049,
+    "2": 0.031,
+    "4": 0.044,
+    "8": 0.044
+  },
+  "features": [
+    "ret_1",
+    "ret_2",
+    "ret_4",
+    "ret_8",
+    "ret_13",
+    "ret_26",
+    "ret_52",
+    "dev_ma4",
+    "dev_ma13",
+    "dev_ma52",
+    "vol_13",
+    "spread_national",
+    "spread_national_chg4",
+    "national_ret_1",
+    "national_ret_4",
+    "province_code",
+    "price_level_rel",
+    "weeks_to_fitri",
+    "ramadan_frac",
+    "tgt_weeks_to_fitri",
+    "tgt_weeks_to_adha",
+    "tgt_ramadan_frac",
+    "tgt_fitri_week",
+    "tgt_holiday_days",
+    "tgt_xmas_ny",
+    "tgt_doy_sin",
+    "tgt_doy_cos",
+    "margin_producer",
+    "margin_producer_chg4",
+    "producer_ret_1",
+    "producer_ret_4",
+    "margin_wholesale",
+    "wholesale_ret_1",
+    "hot_days_4w",
+    "tmax_4w_anom"
+  ]
+}

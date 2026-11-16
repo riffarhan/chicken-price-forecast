@@ -131,6 +131,23 @@ k4.metric(
     help=f"1 − MAE(model) / MAE(naive 'price stays the same' forecast), last {meta.get('backtest_weeks', 52)} weeks, all provinces.",
 )
 
+# Reliability notice, based on the untouched hold-out period of the backtest
+_bp_path = OUTPUTS_DIR / "backtest_metrics_by_period.csv"
+if _bp_path.exists():
+    _bp = pd.read_csv(_bp_path)
+    _ho = _bp[(_bp["period"].str.startswith("untouched")) & (_bp["model"] == "XGBoost")
+              & (_bp["horizon"] == horizon)]
+    if len(_ho):
+        _skill, _pv = float(_ho["skill_vs_naive"].iloc[0]), float(_ho["dm_pvalue"].iloc[0])
+        if _skill > 0 and _pv < 0.05:
+            st.success(f"**Reliable horizon.** On older data never used to build the model, {horizon}-week "
+                       f"forecasts had {_skill * 100:.1f}% lower error than 'price stays the same' "
+                       f"(p = {_pv:.3f}).")
+        else:
+            st.warning(f"**Indicative only.** On older data never used to build the model, {horizon}-week "
+                       f"forecasts were not reliably better than 'price stays the same' "
+                       f"({-_skill * 100:+.1f}% error, p = {_pv:.2f}). Use the interval, not the point.")
+
 tab_fc, tab_map, tab_drv, tab_acc, tab_data = st.tabs(
     ["📈 Forecast", "🗺️ All provinces", "🔍 Why?", "🎯 Accuracy", "📚 Data"]
 )

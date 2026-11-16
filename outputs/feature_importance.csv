@@ -1,0 +1,141 @@
+horizon,feature,label,mean_abs_impact_pct
+1,dev_ma52,Gap to 52-week average,0.5436
+1,ret_1,"Price change, last 1 week",0.4620
+1,national_ret_4,"National price change, 4 weeks",0.2746
+1,ret_2,"Price change, last 2 weeks",0.2744
+1,ret_8,"Price change, last 8 weeks",0.2633
+1,national_ret_1,"National price change, 1 week",0.2361
+1,wholesale_ret_1,"Wholesale price change, 1 week",0.1681
+1,tgt_doy_cos,Time of year (cos),0.1672
+1,price_level_rel,Price level vs province history,0.1592
+1,tgt_doy_sin,Time of year (sin),0.1390
+1,dev_ma13,Gap to 13-week average,0.1032
+1,spread_national,Gap to national price,0.0846
+1,ret_13,"Price change, last quarter",0.0827
+1,margin_wholesale,Retail-to-wholesale margin,0.0585
+1,province_code,Province,0.0493
+1,dev_ma4,Gap to 4-week average,0.0485
+1,weeks_to_fitri,Weeks to Idul Fitri (now),0.0485
+1,vol_13,Recent volatility,0.0480
+1,tgt_weeks_to_adha,Weeks to Idul Adha (target week),0.0477
+1,margin_producer,Retail-to-producer margin,0.0476
+1,ret_52,"Price change, year on year",0.0465
+1,margin_producer_chg4,Change in producer margin,0.0455
+1,ret_26,"Price change, last 6 months",0.0442
+1,tmax_4w_anom,"Temperature anomaly, last 4 weeks",0.0423
+1,tgt_ramadan_frac,Ramadan (target week),0.0392
+1,ret_4,"Price change, last 4 weeks",0.0387
+1,tgt_holiday_days,Public holidays in target week,0.0337
+1,hot_days_4w,"Hot days (>=33°C), last 4 weeks",0.0300
+1,producer_ret_4,"Producer price change, 4 weeks",0.0265
+1,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),0.0261
+1,spread_national_chg4,Change in gap to national price,0.0230
+1,tgt_xmas_ny,Christmas / New Year (target),0.0186
+1,tgt_fitri_week,Idul Fitri week (target),0.0151
+1,producer_ret_1,"Producer price change, 1 week",0.0148
+1,ramadan_frac,Ramadan (now),0.0062
+2,dev_ma52,Gap to 52-week average,1.0395
+2,ret_1,"Price change, last 1 week",0.4980
+2,national_ret_4,"National price change, 4 weeks",0.4938
+2,price_level_rel,Price level vs province history,0.4730
+2,ret_8,"Price change, last 8 weeks",0.2565
+2,ret_2,"Price change, last 2 weeks",0.2192
+2,wholesale_ret_1,"Wholesale price change, 1 week",0.1715
+2,ret_13,"Price change, last quarter",0.1552
+2,national_ret_1,"National price change, 1 week",0.1473
+2,tgt_doy_sin,Time of year (sin),0.1446
+2,vol_13,Recent volatility,0.1416
+2,dev_ma13,Gap to 13-week average,0.1221
+2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),0.1134
+2,spread_national,Gap to national price,0.1132
+2,ret_4,"Price change, last 4 weeks",0.1122
+2,margin_producer_chg4,Change in producer margin,0.1020
+2,dev_ma4,Gap to 4-week average,0.0988
+2,margin_producer,Retail-to-producer margin,0.0942
+2,ret_52,"Price change, year on year",0.0895
+2,province_code,Province,0.0872
+2,tmax_4w_anom,"Temperature anomaly, last 4 weeks",0.0825
+2,producer_ret_4,"Producer price change, 4 weeks",0.0762
+2,spread_national_chg4,Change in gap to national price,0.0730
+2,margin_wholesale,Retail-to-wholesale margin,0.0671
+2,weeks_to_fitri,Weeks to Idul Fitri (now),0.0651
+2,ret_26,"Price change, last 6 months",0.0631
+2,tgt_doy_cos,Time of year (cos),0.0571
+2,hot_days_4w,"Hot days (>=33°C), last 4 weeks",0.0525
+2,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),0.0500
+2,tgt_fitri_week,Idul Fitri week (target),0.0479
+2,ramadan_frac,Ramadan (now),0.0477
+2,producer_ret_1,"Producer price change, 1 week",0.0389
+2,tgt_ramadan_frac,Ramadan (target week),0.0305
+2,tgt_xmas_ny,Christmas / New Year (target),0.0131
+2,tgt_holiday_days,Public holidays in target week,0.0120
+4,dev_ma52,Gap to 52-week average,1.4855
+4,tgt_doy_sin,Time of year (sin),1.3434
+4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),0.9096
+4,national_ret_4,"National price change, 4 weeks",0.6782
+4,tgt_doy_cos,Time of year (cos),0.6213
+4,spread_national,Gap to national price,0.6073
+4,ret_8,"Price change, last 8 weeks",0.3360
+4,price_level_rel,Price level vs province history,0.3228
+4,weeks_to_fitri,Weeks to Idul Fitri (now),0.3007
+4,tmax_4w_anom,"Temperature anomaly, last 4 weeks",0.2462
+4,hot_days_4w,"Hot days (>=33°C), last 4 weeks",0.2410
+4,ret_13,"Price change, last quarter",0.2379
+4,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),0.2280
+4,dev_ma13,Gap to 13-week average,0.2238
+4,province_code,Province,0.2075
+4,vol_13,Recent volatility,0.1742
+4,ret_1,"Price change, last 1 week",0.1706
+4,producer_ret_4,"Producer price change, 4 weeks",0.1705
+4,ramadan_frac,Ramadan (now),0.1694
+4,ret_26,"Price change, last 6 months",0.1671
+4,wholesale_ret_1,"Wholesale price change, 1 week",0.1576
+4,margin_producer,Retail-to-producer margin,0.1575
+4,margin_wholesale,Retail-to-wholesale margin,0.1246
+4,ret_2,"Price change, last 2 weeks",0.1204
+4,ret_52,"Price change, year on year",0.1199
+4,margin_producer_chg4,Change in producer margin,0.1112
+4,spread_national_chg4,Change in gap to national price,0.1105
+4,tgt_ramadan_frac,Ramadan (target week),0.0793
+4,dev_ma4,Gap to 4-week average,0.0694
+4,ret_4,"Price change, last 4 weeks",0.0567
+4,producer_ret_1,"Producer price change, 1 week",0.0434
+4,national_ret_1,"National price change, 1 week",0.0293
+4,tgt_holiday_days,Public holidays in target week,0.0075
+4,tgt_xmas_ny,Christmas / New Year (target),0.0062
+4,tgt_fitri_week,Idul Fitri week (target),0.0000
+8,tgt_doy_cos,Time of year (cos),2.2711
+8,dev_ma52,Gap to 52-week average,2.2347
+8,tgt_weeks_to_adha,Weeks to Idul Adha (target week),0.9693
+8,tgt_doy_sin,Time of year (sin),0.9047
+8,spread_national,Gap to national price,0.6327
+8,tmax_4w_anom,"Temperature anomaly, last 4 weeks",0.4704
+8,price_level_rel,Price level vs province history,0.4510
+8,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),0.4437
+8,province_code,Province,0.3745
+8,hot_days_4w,"Hot days (>=33°C), last 4 weeks",0.3109
+8,ret_26,"Price change, last 6 months",0.2878
+8,ret_4,"Price change, last 4 weeks",0.2686
+8,margin_wholesale,Retail-to-wholesale margin,0.2195
+8,ret_8,"Price change, last 8 weeks",0.2069
+8,producer_ret_4,"Producer price change, 4 weeks",0.2059
+8,weeks_to_fitri,Weeks to Idul Fitri (now),0.1915
+8,vol_13,Recent volatility,0.1871
+8,dev_ma13,Gap to 13-week average,0.1771
+8,spread_national_chg4,Change in gap to national price,0.1741
+8,national_ret_4,"National price change, 4 weeks",0.1643
+8,ret_13,"Price change, last quarter",0.1582
+8,ret_52,"Price change, year on year",0.1448
+8,dev_ma4,Gap to 4-week average,0.1296
+8,wholesale_ret_1,"Wholesale price change, 1 week",0.1288
+8,margin_producer_chg4,Change in producer margin,0.1234
+8,margin_producer,Retail-to-producer margin,0.1173
+8,national_ret_1,"National price change, 1 week",0.1158
+8,ret_2,"Price change, last 2 weeks",0.1045
+8,ret_1,"Price change, last 1 week",0.0876
+8,ramadan_frac,Ramadan (now),0.0465
+8,tgt_holiday_days,Public holidays in target week,0.0306
+8,tgt_ramadan_frac,Ramadan (target week),0.0235
+8,tgt_fitri_week,Idul Fitri week (target),0.0159
+8,producer_ret_1,"Producer price change, 1 week",0.0117
+8,tgt_xmas_ny,Christmas / New Year (target),0.0003

@@ -1,37 +1,41 @@
 # Contributing
 
-Thanks for your interest in contributing! Here's how to get started.
-
 ## Setup
 
 ```bash
 git clone https://github.com/riffarhan/chicken-price-forecast.git
 cd chicken-price-forecast
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+python -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
+pytest
 ```
 
-## Making Changes
+## Workflow
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Make your changes
-4. Test locally: run the full pipeline (`generate_dataset.py` → `train_model.py` → `predict.py` → `streamlit run dashboard.py`)
-5. Commit with a clear message
-6. Open a pull request
+1. Create a branch: `git checkout -b feature/your-feature`
+2. Make your change and add or adjust tests in `tests/`
+3. Run `pytest` and `ruff check src tests app`
+4. If you change features or the model, rerun `chicken-forecast train` and
+   `chicken-forecast ablation`, and report the backtest change in your PR
+5. Open a pull request
 
-## Ideas for Contributions
+## Ground rules for new features
 
-- Add new features to the model (e.g., inflation data, fuel prices)
-- Improve the dashboard with additional visualizations
-- Add unit tests
-- Support additional ML algorithms (LightGBM, CatBoost)
-- Add Docker support
-- Connect to a real data source
+This project only uses features that are:
 
-## Code Style
+- **Backed by literature.** Add the paper to `docs/literature.md` with a full
+  citation, and only cite what you have actually read.
+- **Built from public, downloadable data.** Add a downloader under
+  `src/chicken_forecast/data/`. No hand-typed or synthetic data.
+- **Free of look-ahead.** Feature values at week *t* may only use data
+  published by week *t*. `tests/test_features.py` has a leakage test; extend it.
+- **Useful out of sample.** The feature group must improve the rolling-origin
+  backtest in `chicken-forecast ablation`.
 
-- Follow PEP 8
-- Use type hints where practical
-- Keep functions focused and well-documented
+## Ideas
+
+- DOC (day-old chick) and live-bird prices, if a public source appears
+  (significant in Fitrimawati et al., 2024)
+- Domestic maize prices from PIHPS-like sources instead of global benchmarks
+- Probabilistic models (quantile gradient boosting) and hierarchical
+  reconciliation of province and national forecasts

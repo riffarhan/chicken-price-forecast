@@ -1,0 +1,817 @@
+province,horizon,rank,feature,label,feature_value,impact_pct
+Aceh,1,1,dev_ma52,Gap to 52-week average,-0.1807,1.5779
+Aceh,1,2,ret_1,"Price change, last 1 week",-0.0473,-0.8681
+Aceh,1,3,ret_8,"Price change, last 8 weeks",-0.3017,0.6608
+Aceh,1,4,ret_2,"Price change, last 2 weeks",-0.1179,0.4518
+Aceh,1,5,national_ret_1,"National price change, 1 week",-0.0106,-0.4253
+Aceh,1,6,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3337
+Bali,1,1,ret_1,"Price change, last 1 week",-0.0234,-0.4961
+Bali,1,2,ret_2,"Price change, last 2 weeks",-0.0494,0.4136
+Bali,1,3,dev_ma52,Gap to 52-week average,-0.0395,0.3624
+Bali,1,4,ret_8,"Price change, last 8 weeks",-0.1120,0.3342
+Bali,1,5,tgt_doy_cos,Time of year (cos),0.7806,0.3012
+Bali,1,6,national_ret_4,"National price change, 4 weeks",-0.0699,-0.2191
+Banten,1,1,dev_ma52,Gap to 52-week average,-0.0781,0.6765
+Banten,1,2,ret_8,"Price change, last 8 weeks",-0.1155,0.3694
+Banten,1,3,national_ret_1,"National price change, 1 week",-0.0106,-0.2538
+Banten,1,4,tgt_doy_cos,Time of year (cos),0.7806,0.2379
+Banten,1,5,ret_1,"Price change, last 1 week",-0.0103,-0.2349
+Banten,1,6,national_ret_4,"National price change, 4 weeks",-0.0699,-0.2177
+Bengkulu,1,1,dev_ma52,Gap to 52-week average,-0.1882,1.7016
+Bengkulu,1,2,ret_8,"Price change, last 8 weeks",-0.3131,0.7024
+Bengkulu,1,3,dev_ma13,Gap to 13-week average,-0.2083,0.5318
+Bengkulu,1,4,ret_1,"Price change, last 1 week",-0.0367,-0.4802
+Bengkulu,1,5,price_level_rel,Price level vs province history,-0.0197,0.3141
+Bengkulu,1,6,ret_2,"Price change, last 2 weeks",-0.0367,0.3003
+DI Yogyakarta,1,1,ret_1,"Price change, last 1 week",0.0566,1.0557
+DI Yogyakarta,1,2,national_ret_1,"National price change, 1 week",-0.0106,-0.3241
+DI Yogyakarta,1,3,ret_2,"Price change, last 2 weeks",0.0425,-0.2992
+DI Yogyakarta,1,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.2377
+DI Yogyakarta,1,5,tgt_doy_cos,Time of year (cos),0.7806,0.2255
+DI Yogyakarta,1,6,wholesale_ret_1,"Wholesale price change, 1 week",-0.0198,-0.1878
+DKI Jakarta,1,1,dev_ma52,Gap to 52-week average,-0.0419,0.2951
+DKI Jakarta,1,2,ret_1,"Price change, last 1 week",-0.0052,-0.2411
+DKI Jakarta,1,3,ret_8,"Price change, last 8 weeks",-0.1048,0.2273
+DKI Jakarta,1,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.2090
+DKI Jakarta,1,5,tgt_doy_cos,Time of year (cos),0.7806,0.2028
+DKI Jakarta,1,6,tgt_doy_sin,Time of year (sin),-0.6250,0.1281
+Gorontalo,1,1,ret_1,"Price change, last 1 week",-0.0242,-0.5639
+Gorontalo,1,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4368
+Gorontalo,1,3,price_level_rel,Price level vs province history,0.2084,-0.3017
+Gorontalo,1,4,national_ret_1,"National price change, 1 week",-0.0106,-0.2806
+Gorontalo,1,5,dev_ma52,Gap to 52-week average,0.0282,-0.2512
+Gorontalo,1,6,tgt_doy_sin,Time of year (sin),-0.6250,0.1753
+Jambi,1,1,dev_ma52,Gap to 52-week average,-0.1785,1.5511
+Jambi,1,2,ret_8,"Price change, last 8 weeks",-0.3115,0.8260
+Jambi,1,3,ret_1,"Price change, last 1 week",-0.0429,-0.6660
+Jambi,1,4,dev_ma13,Gap to 13-week average,-0.2123,0.4543
+Jambi,1,5,ret_2,"Price change, last 2 weeks",-0.0684,0.4415
+Jambi,1,6,national_ret_1,"National price change, 1 week",-0.0106,-0.3197
+Jawa Barat,1,1,dev_ma52,Gap to 52-week average,-0.0411,0.3316
+Jawa Barat,1,2,ret_8,"Price change, last 8 weeks",-0.0825,0.2865
+Jawa Barat,1,3,tgt_doy_cos,Time of year (cos),0.7806,0.2406
+Jawa Barat,1,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.2383
+Jawa Barat,1,5,national_ret_1,"National price change, 1 week",-0.0106,-0.1289
+Jawa Barat,1,6,ret_1,"Price change, last 1 week",-0.0035,-0.1243
+Jawa Tengah,1,1,ret_1,"Price change, last 1 week",0.0174,0.3924
+Jawa Tengah,1,2,tgt_doy_cos,Time of year (cos),0.7806,0.2629
+Jawa Tengah,1,3,ret_8,"Price change, last 8 weeks",-0.0904,0.2579
+Jawa Tengah,1,4,national_ret_1,"National price change, 1 week",-0.0106,-0.2365
+Jawa Tengah,1,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.2197
+Jawa Tengah,1,6,wholesale_ret_1,"Wholesale price change, 1 week",0.0274,0.1349
+Jawa Timur,1,1,dev_ma52,Gap to 52-week average,-0.0628,0.5169
+Jawa Timur,1,2,ret_8,"Price change, last 8 weeks",-0.1580,0.3730
+Jawa Timur,1,3,national_ret_1,"National price change, 1 week",-0.0106,-0.3181
+Jawa Timur,1,4,tgt_doy_cos,Time of year (cos),0.7806,0.2899
+Jawa Timur,1,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.2157
+Jawa Timur,1,6,ret_1,"Price change, last 1 week",-0.0038,-0.1962
+Kalimantan Barat,1,1,ret_2,"Price change, last 2 weeks",-0.0410,0.4001
+Kalimantan Barat,1,2,dev_ma52,Gap to 52-week average,-0.0359,0.3438
+Kalimantan Barat,1,3,ret_1,"Price change, last 1 week",-0.0122,-0.3199
+Kalimantan Barat,1,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3149
+Kalimantan Barat,1,5,wholesale_ret_1,"Wholesale price change, 1 week",-0.0354,-0.2044
+Kalimantan Barat,1,6,national_ret_1,"National price change, 1 week",-0.0106,-0.1951
+Kalimantan Selatan,1,1,ret_1,"Price change, last 1 week",-0.0301,-0.6618
+Kalimantan Selatan,1,2,ret_2,"Price change, last 2 weeks",-0.0583,0.4189
+Kalimantan Selatan,1,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3209
+Kalimantan Selatan,1,4,national_ret_1,"National price change, 1 week",-0.0106,-0.1789
+Kalimantan Selatan,1,5,margin_producer_chg4,Change in producer margin,-0.2926,-0.1682
+Kalimantan Selatan,1,6,tgt_doy_cos,Time of year (cos),0.7806,0.1598
+Kalimantan Tengah,1,1,ret_2,"Price change, last 2 weeks",-0.0764,0.5102
+Kalimantan Tengah,1,2,dev_ma52,Gap to 52-week average,-0.0384,0.4206
+Kalimantan Tengah,1,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3376
+Kalimantan Tengah,1,4,wholesale_ret_1,"Wholesale price change, 1 week",-0.0476,-0.1801
+Kalimantan Tengah,1,5,price_level_rel,Price level vs province history,-0.0103,0.1703
+Kalimantan Tengah,1,6,tgt_doy_sin,Time of year (sin),-0.6250,0.1601
+Kalimantan Timur,1,1,ret_2,"Price change, last 2 weeks",0.0793,-0.8506
+Kalimantan Timur,1,2,ret_1,"Price change, last 1 week",-0.0079,-0.3547
+Kalimantan Timur,1,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.2687
+Kalimantan Timur,1,4,dev_ma52,Gap to 52-week average,0.0171,-0.2276
+Kalimantan Timur,1,5,tgt_doy_sin,Time of year (sin),-0.6250,0.1979
+Kalimantan Timur,1,6,wholesale_ret_1,"Wholesale price change, 1 week",0.0381,0.1790
+Kalimantan Utara,1,1,ret_1,"Price change, last 1 week",0.0155,0.4704
+Kalimantan Utara,1,2,national_ret_1,"National price change, 1 week",-0.0106,-0.1650
+Kalimantan Utara,1,3,tgt_doy_sin,Time of year (sin),-0.6250,0.1569
+Kalimantan Utara,1,4,tgt_doy_cos,Time of year (cos),0.7806,0.1494
+Kalimantan Utara,1,5,vol_13,Recent volatility,0.0162,0.1060
+Kalimantan Utara,1,6,ret_2,"Price change, last 2 weeks",0.0301,-0.1053
+Kepulauan Bangka Belitung,1,1,ret_2,"Price change, last 2 weeks",0.0486,-0.7345
+Kepulauan Bangka Belitung,1,2,ret_1,"Price change, last 1 week",-0.0178,-0.6040
+Kepulauan Bangka Belitung,1,3,wholesale_ret_1,"Wholesale price change, 1 week",-0.0704,-0.2863
+Kepulauan Bangka Belitung,1,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.2443
+Kepulauan Bangka Belitung,1,5,dev_ma13,Gap to 13-week average,-0.0718,-0.2214
+Kepulauan Bangka Belitung,1,6,national_ret_1,"National price change, 1 week",-0.0106,-0.1666
+Kepulauan Riau,1,1,ret_1,"Price change, last 1 week",0.0601,0.9562
+Kepulauan Riau,1,2,ret_2,"Price change, last 2 weeks",0.0634,-0.3050
+Kepulauan Riau,1,3,national_ret_1,"National price change, 1 week",-0.0106,-0.2023
+Kepulauan Riau,1,4,tgt_doy_sin,Time of year (sin),-0.6250,0.1793
+Kepulauan Riau,1,5,wholesale_ret_1,"Wholesale price change, 1 week",-0.0168,-0.1568
+Kepulauan Riau,1,6,national_ret_4,"National price change, 4 weeks",-0.0699,-0.1407
+Lampung,1,1,ret_1,"Price change, last 1 week",-0.0134,-0.4368
+Lampung,1,2,dev_ma52,Gap to 52-week average,-0.0427,0.3294
+Lampung,1,3,ret_2,"Price change, last 2 weeks",-0.0367,0.3271
+Lampung,1,4,tgt_doy_cos,Time of year (cos),0.7806,0.3191
+Lampung,1,5,ret_8,"Price change, last 8 weeks",-0.1294,0.3179
+Lampung,1,6,national_ret_4,"National price change, 4 weeks",-0.0699,-0.2816
+Maluku,1,1,national_ret_4,"National price change, 4 weeks",-0.0699,-0.1822
+Maluku,1,2,price_level_rel,Price level vs province history,0.1650,-0.1736
+Maluku,1,3,margin_producer,Retail-to-producer margin,0.6586,0.1528
+Maluku,1,4,ret_1,"Price change, last 1 week",0.0000,0.1381
+Maluku,1,5,vol_13,Recent volatility,0.0098,0.1325
+Maluku,1,6,national_ret_1,"National price change, 1 week",-0.0106,-0.1243
+Maluku Utara,1,1,national_ret_4,"National price change, 4 weeks",-0.0699,-0.1735
+Maluku Utara,1,2,price_level_rel,Price level vs province history,0.1135,-0.1593
+Maluku Utara,1,3,national_ret_1,"National price change, 1 week",-0.0106,-0.1289
+Maluku Utara,1,4,vol_13,Recent volatility,0.0068,0.1285
+Maluku Utara,1,5,tgt_doy_sin,Time of year (sin),-0.6250,0.1232
+Maluku Utara,1,6,ret_1,"Price change, last 1 week",0.0000,0.1146
+Nusa Tenggara Barat,1,1,dev_ma52,Gap to 52-week average,-0.0957,1.1802
+Nusa Tenggara Barat,1,2,ret_8,"Price change, last 8 weeks",-0.2200,0.5359
+Nusa Tenggara Barat,1,3,ret_1,"Price change, last 1 week",-0.0150,-0.3485
+Nusa Tenggara Barat,1,4,ret_2,"Price change, last 2 weeks",-0.0488,0.3426
+Nusa Tenggara Barat,1,5,price_level_rel,Price level vs province history,-0.0587,0.2784
+Nusa Tenggara Barat,1,6,national_ret_4,"National price change, 4 weeks",-0.0699,-0.2254
+Nusa Tenggara Timur,1,1,ret_1,"Price change, last 1 week",-0.0066,-0.1874
+Nusa Tenggara Timur,1,2,price_level_rel,Price level vs province history,0.1194,-0.1837
+Nusa Tenggara Timur,1,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.1647
+Nusa Tenggara Timur,1,4,tgt_doy_sin,Time of year (sin),-0.6250,0.1610
+Nusa Tenggara Timur,1,5,national_ret_1,"National price change, 1 week",-0.0106,-0.1310
+Nusa Tenggara Timur,1,6,tgt_doy_cos,Time of year (cos),0.7806,0.1173
+Papua,1,1,ret_1,"Price change, last 1 week",-0.0087,-0.2072
+Papua,1,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.1901
+Papua,1,3,wholesale_ret_1,"Wholesale price change, 1 week",0.0073,0.1894
+Papua,1,4,price_level_rel,Price level vs province history,0.1982,-0.1883
+Papua,1,5,tgt_doy_sin,Time of year (sin),-0.6250,0.1486
+Papua,1,6,national_ret_1,"National price change, 1 week",-0.0106,-0.1432
+Papua Barat,1,1,ret_1,"Price change, last 1 week",0.0321,0.6787
+Papua Barat,1,2,price_level_rel,Price level vs province history,0.1538,-0.3088
+Papua Barat,1,3,dev_ma52,Gap to 52-week average,-0.0372,0.2819
+Papua Barat,1,4,wholesale_ret_1,"Wholesale price change, 1 week",-0.0393,-0.2025
+Papua Barat,1,5,spread_national,Gap to national price,0.2518,-0.1733
+Papua Barat,1,6,tgt_doy_sin,Time of year (sin),-0.6250,0.1703
+Riau,1,1,dev_ma52,Gap to 52-week average,-0.2198,1.6780
+Riau,1,2,ret_8,"Price change, last 8 weeks",-0.3531,0.6595
+Riau,1,3,ret_2,"Price change, last 2 weeks",-0.1122,0.3985
+Riau,1,4,ret_13,"Price change, last quarter",-0.2982,-0.3552
+Riau,1,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3460
+Riau,1,6,national_ret_1,"National price change, 1 week",-0.0106,-0.3452
+Sulawesi Barat,1,1,ret_1,"Price change, last 1 week",-0.0202,-0.6727
+Sulawesi Barat,1,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.5219
+Sulawesi Barat,1,3,national_ret_1,"National price change, 1 week",-0.0106,-0.3390
+Sulawesi Barat,1,4,dev_ma52,Gap to 52-week average,0.0436,-0.2984
+Sulawesi Barat,1,5,price_level_rel,Price level vs province history,0.1352,-0.2790
+Sulawesi Barat,1,6,ret_2,"Price change, last 2 weeks",-0.0401,0.2031
+Sulawesi Selatan,1,1,ret_1,"Price change, last 1 week",-0.0359,-0.8677
+Sulawesi Selatan,1,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4273
+Sulawesi Selatan,1,3,price_level_rel,Price level vs province history,0.1147,-0.3514
+Sulawesi Selatan,1,4,ret_2,"Price change, last 2 weeks",-0.0749,0.3052
+Sulawesi Selatan,1,5,national_ret_1,"National price change, 1 week",-0.0106,-0.2912
+Sulawesi Selatan,1,6,spread_national,Gap to national price,-0.2608,0.1768
+Sulawesi Tengah,1,1,ret_1,"Price change, last 1 week",-0.0423,-0.9781
+Sulawesi Tengah,1,2,wholesale_ret_1,"Wholesale price change, 1 week",-0.0877,-0.5304
+Sulawesi Tengah,1,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4691
+Sulawesi Tengah,1,4,dev_ma52,Gap to 52-week average,-0.0257,0.4023
+Sulawesi Tengah,1,5,ret_2,"Price change, last 2 weeks",-0.0570,0.3561
+Sulawesi Tengah,1,6,national_ret_1,"National price change, 1 week",-0.0106,-0.2798
+Sulawesi Tenggara,1,1,dev_ma52,Gap to 52-week average,-0.0893,1.3973
+Sulawesi Tenggara,1,2,ret_1,"Price change, last 1 week",-0.0519,-0.7180
+Sulawesi Tenggara,1,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4213
+Sulawesi Tenggara,1,4,ret_2,"Price change, last 2 weeks",-0.1111,0.4206
+Sulawesi Tenggara,1,5,price_level_rel,Price level vs province history,-0.0308,0.3567
+Sulawesi Tenggara,1,6,ret_8,"Price change, last 8 weeks",-0.1237,0.3145
+Sulawesi Utara,1,1,national_ret_4,"National price change, 4 weeks",-0.0699,-0.2842
+Sulawesi Utara,1,2,price_level_rel,Price level vs province history,0.1218,-0.2114
+Sulawesi Utara,1,3,national_ret_1,"National price change, 1 week",-0.0106,-0.1623
+Sulawesi Utara,1,4,wholesale_ret_1,"Wholesale price change, 1 week",-0.0142,-0.1610
+Sulawesi Utara,1,5,dev_ma52,Gap to 52-week average,-0.0192,0.1589
+Sulawesi Utara,1,6,tgt_doy_sin,Time of year (sin),-0.6250,0.1205
+Sumatera Barat,1,1,dev_ma52,Gap to 52-week average,-0.1078,1.0679
+Sumatera Barat,1,2,ret_1,"Price change, last 1 week",-0.0234,-0.4426
+Sumatera Barat,1,3,ret_2,"Price change, last 2 weeks",-0.0582,0.4281
+Sumatera Barat,1,4,national_ret_1,"National price change, 1 week",-0.0106,-0.3825
+Sumatera Barat,1,5,ret_8,"Price change, last 8 weeks",-0.1739,0.3822
+Sumatera Barat,1,6,national_ret_4,"National price change, 4 weeks",-0.0699,-0.2510
+Sumatera Selatan,1,1,dev_ma52,Gap to 52-week average,-0.1064,1.1126
+Sumatera Selatan,1,2,ret_8,"Price change, last 8 weeks",-0.2227,0.5609
+Sumatera Selatan,1,3,national_ret_1,"National price change, 1 week",-0.0106,-0.3801
+Sumatera Selatan,1,4,ret_2,"Price change, last 2 weeks",-0.0543,0.3715
+Sumatera Selatan,1,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3671
+Sumatera Selatan,1,6,ret_13,"Price change, last quarter",-0.2490,-0.2605
+Sumatera Utara,1,1,dev_ma52,Gap to 52-week average,-0.1243,1.1061
+Sumatera Utara,1,2,ret_8,"Price change, last 8 weeks",-0.2769,0.6146
+Sumatera Utara,1,3,price_level_rel,Price level vs province history,0.1053,-0.5453
+Sumatera Utara,1,4,ret_1,"Price change, last 1 week",-0.0280,-0.4972
+Sumatera Utara,1,5,ret_2,"Price change, last 2 weeks",-0.0619,0.4248
+Sumatera Utara,1,6,national_ret_1,"National price change, 1 week",-0.0106,-0.3819
+Aceh,2,1,dev_ma52,Gap to 52-week average,-0.1807,3.4978
+Aceh,2,2,ret_1,"Price change, last 1 week",-0.0473,-0.6938
+Aceh,2,3,dev_ma4,Gap to 4-week average,-0.0801,-0.6295
+Aceh,2,4,ret_8,"Price change, last 8 weeks",-0.3017,0.4916
+Aceh,2,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4787
+Aceh,2,6,ret_2,"Price change, last 2 weeks",-0.1179,0.3861
+Bali,2,1,dev_ma52,Gap to 52-week average,-0.0395,0.6741
+Bali,2,2,ret_2,"Price change, last 2 weeks",-0.0494,0.4669
+Bali,2,3,ret_1,"Price change, last 1 week",-0.0234,-0.4387
+Bali,2,4,ret_8,"Price change, last 8 weeks",-0.1120,0.3904
+Bali,2,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3428
+Bali,2,6,price_level_rel,Price level vs province history,0.0649,0.2135
+Banten,2,1,dev_ma52,Gap to 52-week average,-0.0781,1.3369
+Banten,2,2,ret_8,"Price change, last 8 weeks",-0.1155,0.5213
+Banten,2,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3815
+Banten,2,4,price_level_rel,Price level vs province history,0.0030,0.3660
+Banten,2,5,margin_producer,Retail-to-producer margin,-0.0305,0.2356
+Banten,2,6,ret_1,"Price change, last 1 week",-0.0103,-0.2209
+Bengkulu,2,1,dev_ma52,Gap to 52-week average,-0.1882,3.1969
+Bengkulu,2,2,price_level_rel,Price level vs province history,-0.0197,0.7125
+Bengkulu,2,3,producer_ret_4,"Producer price change, 4 weeks",-0.2692,0.5904
+Bengkulu,2,4,ret_1,"Price change, last 1 week",-0.0367,-0.5610
+Bengkulu,2,5,ret_8,"Price change, last 8 weeks",-0.3131,0.5060
+Bengkulu,2,6,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4454
+DI Yogyakarta,2,1,ret_1,"Price change, last 1 week",0.0566,0.8176
+DI Yogyakarta,2,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.5831
+DI Yogyakarta,2,3,dev_ma52,Gap to 52-week average,0.0016,-0.3408
+DI Yogyakarta,2,4,ret_8,"Price change, last 8 weeks",-0.0959,0.2290
+DI Yogyakarta,2,5,tgt_doy_sin,Time of year (sin),-0.5268,0.2047
+DI Yogyakarta,2,6,price_level_rel,Price level vs province history,0.0622,0.1904
+DKI Jakarta,2,1,dev_ma52,Gap to 52-week average,-0.0419,0.6189
+DKI Jakarta,2,2,ret_8,"Price change, last 8 weeks",-0.1048,0.3716
+DKI Jakarta,2,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3684
+DKI Jakarta,2,4,tgt_doy_sin,Time of year (sin),-0.5268,0.2616
+DKI Jakarta,2,5,vol_13,Recent volatility,0.0166,0.2489
+DKI Jakarta,2,6,ret_1,"Price change, last 1 week",-0.0052,-0.2264
+Gorontalo,2,1,ret_1,"Price change, last 1 week",-0.0242,-1.1227
+Gorontalo,2,2,price_level_rel,Price level vs province history,0.2084,-1.0815
+Gorontalo,2,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.7849
+Gorontalo,2,4,dev_ma52,Gap to 52-week average,0.0282,-0.4120
+Gorontalo,2,5,ret_4,"Price change, last 4 weeks",-0.1002,-0.3557
+Gorontalo,2,6,national_ret_1,"National price change, 1 week",-0.0106,-0.3049
+Jambi,2,1,dev_ma52,Gap to 52-week average,-0.1785,3.3943
+Jambi,2,2,price_level_rel,Price level vs province history,-0.0260,0.7064
+Jambi,2,3,ret_1,"Price change, last 1 week",-0.0429,-0.6175
+Jambi,2,4,ret_8,"Price change, last 8 weeks",-0.3115,0.4826
+Jambi,2,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4314
+Jambi,2,6,spread_national,Gap to national price,-0.1703,0.3859
+Jawa Barat,2,1,dev_ma52,Gap to 52-week average,-0.0411,0.5937
+Jawa Barat,2,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4232
+Jawa Barat,2,3,ret_8,"Price change, last 8 weeks",-0.0825,0.2850
+Jawa Barat,2,4,price_level_rel,Price level vs province history,0.0386,0.2243
+Jawa Barat,2,5,ret_1,"Price change, last 1 week",-0.0035,-0.2022
+Jawa Barat,2,6,vol_13,Recent volatility,0.0150,0.1848
+Jawa Tengah,2,1,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4790
+Jawa Tengah,2,2,ret_1,"Price change, last 1 week",0.0174,0.3167
+Jawa Tengah,2,3,tmax_4w_anom,"Temperature anomaly, last 4 weeks",3.7996,-0.2898
+Jawa Tengah,2,4,ret_8,"Price change, last 8 weeks",-0.0904,0.2496
+Jawa Tengah,2,5,ret_52,"Price change, year on year",0.0527,-0.1784
+Jawa Tengah,2,6,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),-12.0000,-0.1641
+Jawa Timur,2,1,dev_ma52,Gap to 52-week average,-0.0628,1.2747
+Jawa Timur,2,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4523
+Jawa Timur,2,3,ret_8,"Price change, last 8 weeks",-0.1580,0.4237
+Jawa Timur,2,4,price_level_rel,Price level vs province history,0.0347,0.4197
+Jawa Timur,2,5,dev_ma13,Gap to 13-week average,-0.1086,-0.2621
+Jawa Timur,2,6,ret_4,"Price change, last 4 weeks",-0.1163,-0.2240
+Kalimantan Barat,2,1,national_ret_4,"National price change, 4 weeks",-0.0699,-0.5693
+Kalimantan Barat,2,2,dev_ma52,Gap to 52-week average,-0.0359,0.4717
+Kalimantan Barat,2,3,ret_2,"Price change, last 2 weeks",-0.0410,0.4262
+Kalimantan Barat,2,4,price_level_rel,Price level vs province history,0.0468,0.3499
+Kalimantan Barat,2,5,ret_1,"Price change, last 1 week",-0.0122,-0.3080
+Kalimantan Barat,2,6,wholesale_ret_1,"Wholesale price change, 1 week",-0.0354,-0.2240
+Kalimantan Selatan,2,1,ret_1,"Price change, last 1 week",-0.0301,-0.5506
+Kalimantan Selatan,2,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4946
+Kalimantan Selatan,2,3,ret_2,"Price change, last 2 weeks",-0.0583,0.4805
+Kalimantan Selatan,2,4,price_level_rel,Price level vs province history,0.0314,0.2922
+Kalimantan Selatan,2,5,margin_wholesale,Retail-to-wholesale margin,-0.0024,0.2122
+Kalimantan Selatan,2,6,spread_national,Gap to national price,0.1020,-0.1901
+Kalimantan Tengah,2,1,dev_ma52,Gap to 52-week average,-0.0384,0.7068
+Kalimantan Tengah,2,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.5877
+Kalimantan Tengah,2,3,price_level_rel,Price level vs province history,-0.0103,0.4551
+Kalimantan Tengah,2,4,ret_2,"Price change, last 2 weeks",-0.0764,0.4153
+Kalimantan Tengah,2,5,wholesale_ret_1,"Wholesale price change, 1 week",-0.0476,-0.2822
+Kalimantan Tengah,2,6,ret_4,"Price change, last 4 weeks",-0.1078,-0.1875
+Kalimantan Timur,2,1,ret_1,"Price change, last 1 week",-0.0079,-0.6048
+Kalimantan Timur,2,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.6001
+Kalimantan Timur,2,3,ret_2,"Price change, last 2 weeks",0.0793,-0.5591
+Kalimantan Timur,2,4,price_level_rel,Price level vs province history,0.0959,-0.5123
+Kalimantan Timur,2,5,dev_ma52,Gap to 52-week average,0.0171,-0.4091
+Kalimantan Timur,2,6,wholesale_ret_1,"Wholesale price change, 1 week",0.0381,0.3427
+Kalimantan Utara,2,1,ret_1,"Price change, last 1 week",0.0155,0.3928
+Kalimantan Utara,2,2,vol_13,Recent volatility,0.0162,0.3282
+Kalimantan Utara,2,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3190
+Kalimantan Utara,2,4,tgt_doy_sin,Time of year (sin),-0.5268,0.3041
+Kalimantan Utara,2,5,ret_13,"Price change, last quarter",-0.0165,0.1398
+Kalimantan Utara,2,6,price_level_rel,Price level vs province history,0.0605,0.1309
+Kepulauan Bangka Belitung,2,1,ret_1,"Price change, last 1 week",-0.0178,-0.5409
+Kepulauan Bangka Belitung,2,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4843
+Kepulauan Bangka Belitung,2,3,ret_8,"Price change, last 8 weeks",-0.1634,0.4524
+Kepulauan Bangka Belitung,2,4,wholesale_ret_1,"Wholesale price change, 1 week",-0.0704,-0.4379
+Kepulauan Bangka Belitung,2,5,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.2011
+Kepulauan Bangka Belitung,2,6,ret_13,"Price change, last quarter",-0.0310,0.2004
+Kepulauan Riau,2,1,ret_1,"Price change, last 1 week",0.0601,0.7098
+Kepulauan Riau,2,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4129
+Kepulauan Riau,2,3,tgt_doy_sin,Time of year (sin),-0.5268,0.2980
+Kepulauan Riau,2,4,ret_2,"Price change, last 2 weeks",0.0634,-0.2953
+Kepulauan Riau,2,5,wholesale_ret_1,"Wholesale price change, 1 week",-0.0168,-0.1974
+Kepulauan Riau,2,6,margin_producer,Retail-to-producer margin,,0.1801
+Lampung,2,1,dev_ma52,Gap to 52-week average,-0.0427,0.7074
+Lampung,2,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4464
+Lampung,2,3,ret_8,"Price change, last 8 weeks",-0.1294,0.3796
+Lampung,2,4,price_level_rel,Price level vs province history,0.0294,0.3564
+Lampung,2,5,ret_1,"Price change, last 1 week",-0.0134,-0.3184
+Lampung,2,6,ret_2,"Price change, last 2 weeks",-0.0367,0.3142
+Maluku,2,1,vol_13,Recent volatility,0.0098,0.3986
+Maluku,2,2,price_level_rel,Price level vs province history,0.1650,-0.3877
+Maluku,2,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3091
+Maluku,2,4,tgt_doy_sin,Time of year (sin),-0.5268,0.2736
+Maluku,2,5,ret_52,"Price change, year on year",0.1729,0.2447
+Maluku,2,6,ret_1,"Price change, last 1 week",0.0000,0.2155
+Maluku Utara,2,1,vol_13,Recent volatility,0.0068,0.4024
+Maluku Utara,2,2,price_level_rel,Price level vs province history,0.1135,-0.3344
+Maluku Utara,2,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3278
+Maluku Utara,2,4,tgt_doy_sin,Time of year (sin),-0.5268,0.2506
+Maluku Utara,2,5,ret_1,"Price change, last 1 week",0.0000,0.2353
+Maluku Utara,2,6,dev_ma52,Gap to 52-week average,0.0021,-0.2155
+Nusa Tenggara Barat,2,1,dev_ma52,Gap to 52-week average,-0.0957,2.3126
+Nusa Tenggara Barat,2,2,price_level_rel,Price level vs province history,-0.0587,0.7246
+Nusa Tenggara Barat,2,3,ret_8,"Price change, last 8 weeks",-0.2200,0.7024
+Nusa Tenggara Barat,2,4,wholesale_ret_1,"Wholesale price change, 1 week",-0.0612,-0.4600
+Nusa Tenggara Barat,2,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4046
+Nusa Tenggara Barat,2,6,ret_1,"Price change, last 1 week",-0.0150,-0.2750
+Nusa Tenggara Timur,2,1,price_level_rel,Price level vs province history,0.1194,-0.4727
+Nusa Tenggara Timur,2,2,ret_1,"Price change, last 1 week",-0.0066,-0.4547
+Nusa Tenggara Timur,2,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3862
+Nusa Tenggara Timur,2,4,tgt_doy_sin,Time of year (sin),-0.5268,0.3349
+Nusa Tenggara Timur,2,5,dev_ma52,Gap to 52-week average,-0.0037,-0.1965
+Nusa Tenggara Timur,2,6,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.1729
+Papua,2,1,price_level_rel,Price level vs province history,0.1982,-0.6201
+Papua,2,2,ret_1,"Price change, last 1 week",-0.0087,-0.4309
+Papua,2,3,vol_13,Recent volatility,0.0032,0.4225
+Papua,2,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4013
+Papua,2,5,spread_national,Gap to national price,0.2911,-0.2881
+Papua,2,6,tgt_doy_sin,Time of year (sin),-0.5268,0.2741
+Papua Barat,2,1,price_level_rel,Price level vs province history,0.1538,-0.6262
+Papua Barat,2,2,ret_1,"Price change, last 1 week",0.0321,0.5554
+Papua Barat,2,3,dev_ma52,Gap to 52-week average,-0.0372,0.5269
+Papua Barat,2,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3410
+Papua Barat,2,5,tgt_doy_sin,Time of year (sin),-0.5268,0.2420
+Papua Barat,2,6,wholesale_ret_1,"Wholesale price change, 1 week",-0.0393,-0.2398
+Riau,2,1,dev_ma52,Gap to 52-week average,-0.2198,3.0713
+Riau,2,2,price_level_rel,Price level vs province history,-0.0741,1.0822
+Riau,2,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4914
+Riau,2,4,ret_1,"Price change, last 1 week",-0.0277,-0.4215
+Riau,2,5,ret_8,"Price change, last 8 weeks",-0.3531,0.4193
+Riau,2,6,ret_2,"Price change, last 2 weeks",-0.1122,0.3362
+Sulawesi Barat,2,1,ret_1,"Price change, last 1 week",-0.0202,-1.1010
+Sulawesi Barat,2,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.9093
+Sulawesi Barat,2,3,price_level_rel,Price level vs province history,0.1352,-0.7006
+Sulawesi Barat,2,4,dev_ma52,Gap to 52-week average,0.0436,-0.5709
+Sulawesi Barat,2,5,ret_52,"Price change, year on year",0.2018,0.2553
+Sulawesi Barat,2,6,national_ret_1,"National price change, 1 week",-0.0106,-0.2442
+Sulawesi Selatan,2,1,ret_1,"Price change, last 1 week",-0.0359,-1.3853
+Sulawesi Selatan,2,2,national_ret_4,"National price change, 4 weeks",-0.0699,-0.9853
+Sulawesi Selatan,2,3,price_level_rel,Price level vs province history,0.1147,-0.9758
+Sulawesi Selatan,2,4,ret_4,"Price change, last 4 weeks",-0.0923,-0.4704
+Sulawesi Selatan,2,5,national_ret_1,"National price change, 1 week",-0.0106,-0.3861
+Sulawesi Selatan,2,6,dev_ma52,Gap to 52-week average,-0.0061,-0.3490
+Sulawesi Tengah,2,1,national_ret_4,"National price change, 4 weeks",-0.0699,-0.8236
+Sulawesi Tengah,2,2,ret_1,"Price change, last 1 week",-0.0423,-0.7832
+Sulawesi Tengah,2,3,wholesale_ret_1,"Wholesale price change, 1 week",-0.0877,-0.5182
+Sulawesi Tengah,2,4,price_level_rel,Price level vs province history,0.0692,0.3267
+Sulawesi Tengah,2,5,ret_2,"Price change, last 2 weeks",-0.0570,0.3194
+Sulawesi Tengah,2,6,dev_ma52,Gap to 52-week average,-0.0257,0.2844
+Sulawesi Tenggara,2,1,dev_ma52,Gap to 52-week average,-0.0893,1.9734
+Sulawesi Tenggara,2,2,price_level_rel,Price level vs province history,-0.0308,0.7586
+Sulawesi Tenggara,2,3,ret_1,"Price change, last 1 week",-0.0519,-0.6643
+Sulawesi Tenggara,2,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.5899
+Sulawesi Tenggara,2,5,ret_2,"Price change, last 2 weeks",-0.1111,0.4475
+Sulawesi Tenggara,2,6,margin_producer,Retail-to-producer margin,-0.0096,0.3309
+Sulawesi Utara,2,1,national_ret_4,"National price change, 4 weeks",-0.0699,-0.5081
+Sulawesi Utara,2,2,price_level_rel,Price level vs province history,0.1218,-0.4308
+Sulawesi Utara,2,3,vol_13,Recent volatility,0.0169,0.3877
+Sulawesi Utara,2,4,tgt_doy_sin,Time of year (sin),-0.5268,0.1939
+Sulawesi Utara,2,5,margin_producer_chg4,Change in producer margin,-0.0397,-0.1919
+Sulawesi Utara,2,6,ret_13,"Price change, last quarter",0.0385,0.1883
+Sumatera Barat,2,1,dev_ma52,Gap to 52-week average,-0.1078,2.3835
+Sumatera Barat,2,2,ret_8,"Price change, last 8 weeks",-0.1739,0.4584
+Sumatera Barat,2,3,ret_2,"Price change, last 2 weeks",-0.0582,0.4141
+Sumatera Barat,2,4,price_level_rel,Price level vs province history,0.0622,0.3686
+Sumatera Barat,2,5,ret_1,"Price change, last 1 week",-0.0234,-0.3682
+Sumatera Barat,2,6,national_ret_4,"National price change, 4 weeks",-0.0699,-0.3472
+Sumatera Selatan,2,1,dev_ma52,Gap to 52-week average,-0.1064,2.3632
+Sumatera Selatan,2,2,ret_8,"Price change, last 8 weeks",-0.2227,0.6946
+Sumatera Selatan,2,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4637
+Sumatera Selatan,2,4,price_level_rel,Price level vs province history,0.0267,0.4116
+Sumatera Selatan,2,5,province_code,Province,32.0000,0.3997
+Sumatera Selatan,2,6,ret_2,"Price change, last 2 weeks",-0.0543,0.3555
+Sumatera Utara,2,1,dev_ma52,Gap to 52-week average,-0.1243,2.5515
+Sumatera Utara,2,2,price_level_rel,Price level vs province history,0.1053,-1.2308
+Sumatera Utara,2,3,ret_1,"Price change, last 1 week",-0.0280,-0.7413
+Sumatera Utara,2,4,ret_8,"Price change, last 8 weeks",-0.2769,0.5739
+Sumatera Utara,2,5,province_code,Province,33.0000,0.4780
+Sumatera Utara,2,6,national_ret_4,"National price change, 4 weeks",-0.0699,-0.4166
+Aceh,4,1,dev_ma52,Gap to 52-week average,-0.1807,5.2937
+Aceh,4,2,tgt_doy_sin,Time of year (sin),-0.3088,1.1455
+Aceh,4,3,spread_national,Gap to national price,-0.1756,1.0283
+Aceh,4,4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.9056
+Aceh,4,5,ret_8,"Price change, last 8 weeks",-0.3017,0.7423
+Aceh,4,6,dev_ma13,Gap to 13-week average,-0.1937,0.7119
+Bali,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.1297
+Bali,4,2,tgt_doy_cos,Time of year (cos),0.9511,0.5970
+Bali,4,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.5781
+Bali,4,4,ret_8,"Price change, last 8 weeks",-0.1120,0.5688
+Bali,4,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.5610
+Bali,4,6,dev_ma52,Gap to 52-week average,-0.0395,0.5492
+Banten,4,1,dev_ma52,Gap to 52-week average,-0.0781,1.7535
+Banten,4,2,tgt_doy_sin,Time of year (sin),-0.3088,1.2471
+Banten,4,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.7439
+Banten,4,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.5327
+Banten,4,5,ret_8,"Price change, last 8 weeks",-0.1155,0.4928
+Banten,4,6,hot_days_4w,"Hot days (>=33°C), last 4 weeks",19.0000,-0.3909
+Bengkulu,4,1,dev_ma52,Gap to 52-week average,-0.1882,5.5364
+Bengkulu,4,2,tgt_doy_sin,Time of year (sin),-0.3088,1.1229
+Bengkulu,4,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8441
+Bengkulu,4,4,spread_national,Gap to national price,-0.1375,0.7854
+Bengkulu,4,5,ret_8,"Price change, last 8 weeks",-0.3131,0.7803
+Bengkulu,4,6,national_ret_4,"National price change, 4 weeks",-0.0699,-0.6655
+DI Yogyakarta,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.6241
+DI Yogyakarta,4,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.2678
+DI Yogyakarta,4,3,tgt_doy_cos,Time of year (cos),0.9511,1.1509
+DI Yogyakarta,4,4,ret_8,"Price change, last 8 weeks",-0.0959,0.9092
+DI Yogyakarta,4,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.7136
+DI Yogyakarta,4,6,ret_1,"Price change, last 1 week",0.0566,0.3370
+DKI Jakarta,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.1250
+DKI Jakarta,4,2,hot_days_4w,"Hot days (>=33°C), last 4 weeks",25.0000,-0.6465
+DKI Jakarta,4,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.6348
+DKI Jakarta,4,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.6164
+DKI Jakarta,4,5,dev_ma52,Gap to 52-week average,-0.0419,0.4955
+DKI Jakarta,4,6,ret_8,"Price change, last 8 weeks",-0.1048,0.3553
+Gorontalo,4,1,tgt_doy_sin,Time of year (sin),-0.3088,2.0952
+Gorontalo,4,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.8790
+Gorontalo,4,3,price_level_rel,Price level vs province history,0.2084,-1.0662
+Gorontalo,4,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.9374
+Gorontalo,4,5,tgt_doy_cos,Time of year (cos),0.9511,0.6907
+Gorontalo,4,6,hot_days_4w,"Hot days (>=33°C), last 4 weeks",18.0000,-0.5374
+Jambi,4,1,dev_ma52,Gap to 52-week average,-0.1785,5.5562
+Jambi,4,2,tgt_doy_sin,Time of year (sin),-0.3088,1.1474
+Jambi,4,3,spread_national,Gap to national price,-0.1703,0.9643
+Jambi,4,4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.7851
+Jambi,4,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.7289
+Jambi,4,6,ret_8,"Price change, last 8 weeks",-0.3115,0.6088
+Jawa Barat,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.0956
+Jawa Barat,4,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8062
+Jawa Barat,4,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.6152
+Jawa Barat,4,4,tmax_4w_anom,"Temperature anomaly, last 4 weeks",3.7242,-0.5145
+Jawa Barat,4,5,hot_days_4w,"Hot days (>=33°C), last 4 weeks",10.0000,-0.4917
+Jawa Barat,4,6,ret_8,"Price change, last 8 weeks",-0.0825,0.4891
+Jawa Tengah,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.2011
+Jawa Tengah,4,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.9810
+Jawa Tengah,4,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.7125
+Jawa Tengah,4,4,tgt_doy_cos,Time of year (cos),0.9511,0.7067
+Jawa Tengah,4,5,ret_8,"Price change, last 8 weeks",-0.0904,0.6570
+Jawa Tengah,4,6,hot_days_4w,"Hot days (>=33°C), last 4 weeks",25.0000,-0.6369
+Jawa Timur,4,1,dev_ma52,Gap to 52-week average,-0.0628,1.2459
+Jawa Timur,4,2,tgt_doy_sin,Time of year (sin),-0.3088,1.0811
+Jawa Timur,4,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.7480
+Jawa Timur,4,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.6331
+Jawa Timur,4,5,tmax_4w_anom,"Temperature anomaly, last 4 weeks",3.2267,-0.5302
+Jawa Timur,4,6,spread_national,Gap to national price,-0.1074,0.5178
+Kalimantan Barat,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.2735
+Kalimantan Barat,4,2,dev_ma52,Gap to 52-week average,-0.0359,0.8074
+Kalimantan Barat,4,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.7277
+Kalimantan Barat,4,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.6976
+Kalimantan Barat,4,5,tgt_doy_cos,Time of year (cos),0.9511,0.5345
+Kalimantan Barat,4,6,spread_national,Gap to national price,-0.0592,0.4868
+Kalimantan Selatan,4,1,tgt_doy_sin,Time of year (sin),-0.3088,0.9274
+Kalimantan Selatan,4,2,spread_national,Gap to national price,0.1020,-0.8761
+Kalimantan Selatan,4,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.7135
+Kalimantan Selatan,4,4,producer_ret_4,"Producer price change, 4 weeks",0.2460,-0.6903
+Kalimantan Selatan,4,5,hot_days_4w,"Hot days (>=33°C), last 4 weeks",21.0000,-0.6884
+Kalimantan Selatan,4,6,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.6094
+Kalimantan Tengah,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.1560
+Kalimantan Tengah,4,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8557
+Kalimantan Tengah,4,3,national_ret_4,"National price change, 4 weeks",-0.0699,-0.7187
+Kalimantan Tengah,4,4,dev_ma52,Gap to 52-week average,-0.0384,0.6667
+Kalimantan Tengah,4,5,hot_days_4w,"Hot days (>=33°C), last 4 weeks",21.0000,-0.5993
+Kalimantan Tengah,4,6,tgt_doy_cos,Time of year (cos),0.9511,0.3997
+Kalimantan Timur,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.9808
+Kalimantan Timur,4,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.3684
+Kalimantan Timur,4,3,tgt_doy_cos,Time of year (cos),0.9511,1.0173
+Kalimantan Timur,4,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.6024
+Kalimantan Timur,4,5,price_level_rel,Price level vs province history,0.0959,-0.3574
+Kalimantan Timur,4,6,weeks_to_fitri,Weeks to Idul Fitri (now),-12.0000,-0.3291
+Kalimantan Utara,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.1614
+Kalimantan Utara,4,2,tgt_doy_cos,Time of year (cos),0.9511,0.7016
+Kalimantan Utara,4,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.6720
+Kalimantan Utara,4,4,spread_national,Gap to national price,0.1844,-0.6591
+Kalimantan Utara,4,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.5171
+Kalimantan Utara,4,6,vol_13,Recent volatility,0.0162,0.3905
+Kepulauan Bangka Belitung,4,1,tgt_doy_cos,Time of year (cos),0.9511,1.1647
+Kepulauan Bangka Belitung,4,2,tgt_doy_sin,Time of year (sin),-0.3088,1.1629
+Kepulauan Bangka Belitung,4,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8887
+Kepulauan Bangka Belitung,4,4,ret_8,"Price change, last 8 weeks",-0.1634,0.7764
+Kepulauan Bangka Belitung,4,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.6467
+Kepulauan Bangka Belitung,4,6,spread_national,Gap to national price,0.0592,-0.5541
+Kepulauan Riau,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.1192
+Kepulauan Riau,4,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.5806
+Kepulauan Riau,4,3,spread_national,Gap to national price,0.0587,-0.5771
+Kepulauan Riau,4,4,tgt_doy_cos,Time of year (cos),0.9511,0.5535
+Kepulauan Riau,4,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.5434
+Kepulauan Riau,4,6,dev_ma4,Gap to 4-week average,0.0441,0.3540
+Lampung,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.2774
+Lampung,4,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.7270
+Lampung,4,3,dev_ma52,Gap to 52-week average,-0.0427,0.6955
+Lampung,4,4,tgt_doy_cos,Time of year (cos),0.9511,0.5957
+Lampung,4,5,tmax_4w_anom,"Temperature anomaly, last 4 weeks",1.7415,0.5838
+Lampung,4,6,national_ret_4,"National price change, 4 weeks",-0.0699,-0.5511
+Maluku,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.5670
+Maluku,4,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.0200
+Maluku,4,3,spread_national,Gap to national price,0.2299,-0.8004
+Maluku,4,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.6427
+Maluku,4,5,tgt_doy_cos,Time of year (cos),0.9511,0.6124
+Maluku,4,6,vol_13,Recent volatility,0.0098,0.5836
+Maluku Utara,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.4016
+Maluku Utara,4,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8603
+Maluku Utara,4,3,spread_national,Gap to national price,0.1591,-0.8078
+Maluku Utara,4,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.6234
+Maluku Utara,4,5,tgt_doy_cos,Time of year (cos),0.9511,0.5155
+Maluku Utara,4,6,vol_13,Recent volatility,0.0068,0.4772
+Nusa Tenggara Barat,4,1,dev_ma52,Gap to 52-week average,-0.0957,3.7768
+Nusa Tenggara Barat,4,2,tgt_doy_sin,Time of year (sin),-0.3088,1.2830
+Nusa Tenggara Barat,4,3,margin_wholesale,Retail-to-wholesale margin,0.6673,0.9419
+Nusa Tenggara Barat,4,4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8159
+Nusa Tenggara Barat,4,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.8106
+Nusa Tenggara Barat,4,6,ret_8,"Price change, last 8 weeks",-0.2200,0.7173
+Nusa Tenggara Timur,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.5884
+Nusa Tenggara Timur,4,2,spread_national,Gap to national price,0.2663,-0.8214
+Nusa Tenggara Timur,4,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8050
+Nusa Tenggara Timur,4,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.6082
+Nusa Tenggara Timur,4,5,tgt_doy_cos,Time of year (cos),0.9511,0.6078
+Nusa Tenggara Timur,4,6,weeks_to_fitri,Weeks to Idul Fitri (now),-12.0000,-0.3610
+Papua,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.5796
+Papua,4,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.9891
+Papua,4,3,spread_national,Gap to national price,0.2911,-0.9427
+Papua,4,4,tgt_doy_cos,Time of year (cos),0.9511,0.8060
+Papua,4,5,vol_13,Recent volatility,0.0032,0.7469
+Papua,4,6,price_level_rel,Price level vs province history,0.1982,-0.5797
+Papua Barat,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.1449
+Papua Barat,4,2,price_level_rel,Price level vs province history,0.1538,-0.9225
+Papua Barat,4,3,dev_ma52,Gap to 52-week average,-0.0372,0.8417
+Papua Barat,4,4,spread_national,Gap to national price,0.2518,-0.7390
+Papua Barat,4,5,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.6566
+Papua Barat,4,6,national_ret_4,"National price change, 4 weeks",-0.0699,-0.5814
+Riau,4,1,dev_ma52,Gap to 52-week average,-0.2198,4.2514
+Riau,4,2,dev_ma13,Gap to 13-week average,-0.2486,2.6820
+Riau,4,3,tgt_doy_sin,Time of year (sin),-0.3088,1.1223
+Riau,4,4,spread_national,Gap to national price,-0.3625,0.8940
+Riau,4,5,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8299
+Riau,4,6,ret_8,"Price change, last 8 weeks",-0.3531,0.7070
+Sulawesi Barat,4,1,tgt_doy_sin,Time of year (sin),-0.3088,2.2761
+Sulawesi Barat,4,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.7267
+Sulawesi Barat,4,3,tgt_doy_cos,Time of year (cos),0.9511,1.4200
+Sulawesi Barat,4,4,spread_national,Gap to national price,-0.1881,1.3014
+Sulawesi Barat,4,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.9918
+Sulawesi Barat,4,6,price_level_rel,Price level vs province history,0.1352,-0.7041
+Sulawesi Selatan,4,1,tgt_doy_sin,Time of year (sin),-0.3088,2.1189
+Sulawesi Selatan,4,2,spread_national,Gap to national price,-0.2608,1.7049
+Sulawesi Selatan,4,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.6066
+Sulawesi Selatan,4,4,tgt_doy_cos,Time of year (cos),0.9511,1.5857
+Sulawesi Selatan,4,5,national_ret_4,"National price change, 4 weeks",-0.0699,-1.2918
+Sulawesi Selatan,4,6,ret_13,"Price change, last quarter",0.1356,-1.1100
+Sulawesi Tengah,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.4427
+Sulawesi Tengah,4,2,spread_national,Gap to national price,-0.1480,1.2416
+Sulawesi Tengah,4,3,tgt_doy_cos,Time of year (cos),0.9511,1.1265
+Sulawesi Tengah,4,4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.1143
+Sulawesi Tengah,4,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.9189
+Sulawesi Tengah,4,6,wholesale_ret_1,"Wholesale price change, 1 week",-0.0877,-0.7078
+Sulawesi Tenggara,4,1,dev_ma52,Gap to 52-week average,-0.0893,3.3161
+Sulawesi Tenggara,4,2,tgt_doy_sin,Time of year (sin),-0.3088,1.0689
+Sulawesi Tenggara,4,3,spread_national,Gap to national price,-0.1501,0.8272
+Sulawesi Tenggara,4,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.8212
+Sulawesi Tenggara,4,5,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.7596
+Sulawesi Tenggara,4,6,price_level_rel,Price level vs province history,-0.0308,0.5718
+Sulawesi Utara,4,1,tgt_doy_sin,Time of year (sin),-0.3088,1.3185
+Sulawesi Utara,4,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8738
+Sulawesi Utara,4,3,tgt_doy_cos,Time of year (cos),0.9511,0.7890
+Sulawesi Utara,4,4,national_ret_4,"National price change, 4 weeks",-0.0699,-0.6966
+Sulawesi Utara,4,5,vol_13,Recent volatility,0.0169,0.5361
+Sulawesi Utara,4,6,hot_days_4w,"Hot days (>=33°C), last 4 weeks",19.0000,-0.5285
+Sumatera Barat,4,1,dev_ma52,Gap to 52-week average,-0.1078,3.8975
+Sumatera Barat,4,2,tgt_doy_sin,Time of year (sin),-0.3088,1.0102
+Sumatera Barat,4,3,province_code,Province,31.0000,0.9840
+Sumatera Barat,4,4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.5611
+Sumatera Barat,4,5,national_ret_4,"National price change, 4 weeks",-0.0699,-0.5363
+Sumatera Barat,4,6,spread_national,Gap to national price,0.1996,-0.4998
+Sumatera Selatan,4,1,dev_ma52,Gap to 52-week average,-0.1064,3.9999
+Sumatera Selatan,4,2,tgt_doy_sin,Time of year (sin),-0.3088,1.2336
+Sumatera Selatan,4,3,tmax_4w_anom,"Temperature anomaly, last 4 weeks",2.0293,0.9023
+Sumatera Selatan,4,4,spread_national,Gap to national price,-0.1414,0.8375
+Sumatera Selatan,4,5,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.7504
+Sumatera Selatan,4,6,province_code,Province,32.0000,0.6582
+Sumatera Utara,4,1,dev_ma52,Gap to 52-week average,-0.1243,4.5357
+Sumatera Utara,4,2,tgt_doy_sin,Time of year (sin),-0.3088,1.4465
+Sumatera Utara,4,3,province_code,Province,33.0000,1.1265
+Sumatera Utara,4,4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.9555
+Sumatera Utara,4,5,ret_13,"Price change, last quarter",-0.2029,0.9027
+Sumatera Utara,4,6,ret_8,"Price change, last 8 weeks",-0.2769,0.7113
+Aceh,8,1,dev_ma52,Gap to 52-week average,-0.1807,7.6712
+Aceh,8,2,tgt_doy_cos,Time of year (cos),0.9852,3.2503
+Aceh,8,3,tgt_doy_sin,Time of year (sin),0.1712,1.6131
+Aceh,8,4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.0270
+Aceh,8,5,spread_national_chg4,Change in gap to national price,-0.1242,0.9756
+Aceh,8,6,spread_national,Gap to national price,-0.1756,0.8307
+Bali,8,1,tgt_doy_cos,Time of year (cos),0.9852,1.4435
+Bali,8,2,tgt_doy_sin,Time of year (sin),0.1712,0.7361
+Bali,8,3,dev_ma52,Gap to 52-week average,-0.0395,0.7328
+Bali,8,4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.6979
+Bali,8,5,margin_wholesale,Retail-to-wholesale margin,-0.1153,-0.5699
+Bali,8,6,ret_8,"Price change, last 8 weeks",-0.1120,0.3369
+Banten,8,1,dev_ma52,Gap to 52-week average,-0.0781,3.2678
+Banten,8,2,tgt_doy_cos,Time of year (cos),0.9852,1.2156
+Banten,8,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.7932
+Banten,8,4,tgt_doy_sin,Time of year (sin),0.1712,0.6724
+Banten,8,5,hot_days_4w,"Hot days (>=33°C), last 4 weeks",19.0000,-0.5619
+Banten,8,6,ret_52,"Price change, year on year",-0.0248,0.5055
+Bengkulu,8,1,dev_ma52,Gap to 52-week average,-0.1882,9.2637
+Bengkulu,8,2,tgt_doy_cos,Time of year (cos),0.9852,1.4954
+Bengkulu,8,3,tgt_doy_sin,Time of year (sin),0.1712,1.3099
+Bengkulu,8,4,producer_ret_4,"Producer price change, 4 weeks",-0.2692,0.9060
+Bengkulu,8,5,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8554
+Bengkulu,8,6,tmax_4w_anom,"Temperature anomaly, last 4 weeks",2.4759,0.7573
+DI Yogyakarta,8,1,tgt_doy_cos,Time of year (cos),0.9852,2.5235
+DI Yogyakarta,8,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.2380
+DI Yogyakarta,8,3,tgt_doy_sin,Time of year (sin),0.1712,0.6946
+DI Yogyakarta,8,4,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),-8.2857,0.5081
+DI Yogyakarta,8,5,ret_26,"Price change, last 6 months",0.0327,-0.3719
+DI Yogyakarta,8,6,dev_ma13,Gap to 13-week average,-0.0552,0.3703
+DKI Jakarta,8,1,tgt_doy_cos,Time of year (cos),0.9852,1.6932
+DKI Jakarta,8,2,dev_ma52,Gap to 52-week average,-0.0419,0.9566
+DKI Jakarta,8,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.9374
+DKI Jakarta,8,4,hot_days_4w,"Hot days (>=33°C), last 4 weeks",25.0000,-0.8477
+DKI Jakarta,8,5,tgt_doy_sin,Time of year (sin),0.1712,0.7319
+DKI Jakarta,8,6,province_code,Province,5.0000,-0.5026
+Gorontalo,8,1,tgt_doy_cos,Time of year (cos),0.9852,3.4223
+Gorontalo,8,2,price_level_rel,Price level vs province history,0.2084,-1.3264
+Gorontalo,8,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.2775
+Gorontalo,8,4,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),-8.2857,0.9750
+Gorontalo,8,5,hot_days_4w,"Hot days (>=33°C), last 4 weeks",18.0000,-0.8512
+Gorontalo,8,6,tgt_doy_sin,Time of year (sin),0.1712,0.8258
+Jambi,8,1,dev_ma52,Gap to 52-week average,-0.1785,8.5473
+Jambi,8,2,tgt_doy_cos,Time of year (cos),0.9852,1.9263
+Jambi,8,3,tgt_doy_sin,Time of year (sin),0.1712,1.4094
+Jambi,8,4,spread_national,Gap to national price,-0.1703,1.0303
+Jambi,8,5,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8721
+Jambi,8,6,ret_13,"Price change, last quarter",-0.3236,0.8054
+Jawa Barat,8,1,tgt_doy_cos,Time of year (cos),0.9852,1.2230
+Jawa Barat,8,2,tmax_4w_anom,"Temperature anomaly, last 4 weeks",3.7242,-1.1377
+Jawa Barat,8,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8474
+Jawa Barat,8,4,dev_ma52,Gap to 52-week average,-0.0411,0.7443
+Jawa Barat,8,5,tgt_doy_sin,Time of year (sin),0.1712,0.6347
+Jawa Barat,8,6,province_code,Province,8.0000,-0.6072
+Jawa Tengah,8,1,tgt_doy_cos,Time of year (cos),0.9852,1.6153
+Jawa Tengah,8,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.1688
+Jawa Tengah,8,3,tmax_4w_anom,"Temperature anomaly, last 4 weeks",3.7996,-1.0498
+Jawa Tengah,8,4,hot_days_4w,"Hot days (>=33°C), last 4 weeks",25.0000,-0.9638
+Jawa Tengah,8,5,price_level_rel,Price level vs province history,0.0812,-0.6997
+Jawa Tengah,8,6,tgt_doy_sin,Time of year (sin),0.1712,0.5423
+Jawa Timur,8,1,dev_ma52,Gap to 52-week average,-0.0628,1.8367
+Jawa Timur,8,2,tgt_doy_cos,Time of year (cos),0.9852,1.3471
+Jawa Timur,8,3,tmax_4w_anom,"Temperature anomaly, last 4 weeks",3.2267,-1.0263
+Jawa Timur,8,4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8488
+Jawa Timur,8,5,tgt_doy_sin,Time of year (sin),0.1712,0.7257
+Jawa Timur,8,6,hot_days_4w,"Hot days (>=33°C), last 4 weeks",24.0000,-0.6378
+Kalimantan Barat,8,1,tgt_doy_cos,Time of year (cos),0.9852,2.1105
+Kalimantan Barat,8,2,dev_ma52,Gap to 52-week average,-0.0359,1.1426
+Kalimantan Barat,8,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.9435
+Kalimantan Barat,8,4,tgt_doy_sin,Time of year (sin),0.1712,0.8852
+Kalimantan Barat,8,5,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),-8.2857,0.7366
+Kalimantan Barat,8,6,spread_national,Gap to national price,-0.0592,0.4594
+Kalimantan Selatan,8,1,tgt_doy_cos,Time of year (cos),0.9852,1.6196
+Kalimantan Selatan,8,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.9235
+Kalimantan Selatan,8,3,spread_national,Gap to national price,0.1020,-0.8599
+Kalimantan Selatan,8,4,dev_ma52,Gap to 52-week average,-0.0147,0.6559
+Kalimantan Selatan,8,5,hot_days_4w,"Hot days (>=33°C), last 4 weeks",21.0000,-0.5671
+Kalimantan Selatan,8,6,tgt_doy_sin,Time of year (sin),0.1712,0.5577
+Kalimantan Tengah,8,1,tgt_doy_cos,Time of year (cos),0.9852,1.4674
+Kalimantan Tengah,8,2,dev_ma52,Gap to 52-week average,-0.0384,1.1297
+Kalimantan Tengah,8,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.9766
+Kalimantan Tengah,8,4,tgt_doy_sin,Time of year (sin),0.1712,0.7556
+Kalimantan Tengah,8,5,hot_days_4w,"Hot days (>=33°C), last 4 weeks",21.0000,-0.7421
+Kalimantan Tengah,8,6,tmax_4w_anom,"Temperature anomaly, last 4 weeks",2.8138,-0.5212
+Kalimantan Timur,8,1,tgt_doy_cos,Time of year (cos),0.9852,3.2343
+Kalimantan Timur,8,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.0064
+Kalimantan Timur,8,3,tgt_doy_sin,Time of year (sin),0.1712,0.8654
+Kalimantan Timur,8,4,price_level_rel,Price level vs province history,0.0959,-0.5918
+Kalimantan Timur,8,5,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),-8.2857,0.5840
+Kalimantan Timur,8,6,tmax_4w_anom,"Temperature anomaly, last 4 weeks",1.4238,0.4792
+Kalimantan Utara,8,1,tgt_doy_cos,Time of year (cos),0.9852,2.3541
+Kalimantan Utara,8,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8802
+Kalimantan Utara,8,3,tgt_doy_sin,Time of year (sin),0.1712,0.7931
+Kalimantan Utara,8,4,spread_national,Gap to national price,0.1844,-0.6334
+Kalimantan Utara,8,5,vol_13,Recent volatility,0.0162,0.3819
+Kalimantan Utara,8,6,price_level_rel,Price level vs province history,0.0605,-0.3794
+Kepulauan Bangka Belitung,8,1,tgt_doy_cos,Time of year (cos),0.9852,2.3867
+Kepulauan Bangka Belitung,8,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.0916
+Kepulauan Bangka Belitung,8,3,tgt_doy_sin,Time of year (sin),0.1712,0.7615
+Kepulauan Bangka Belitung,8,4,ret_8,"Price change, last 8 weeks",-0.1634,0.6604
+Kepulauan Bangka Belitung,8,5,price_level_rel,Price level vs province history,0.0781,-0.6335
+Kepulauan Bangka Belitung,8,6,dev_ma52,Gap to 52-week average,-0.0153,0.6212
+Kepulauan Riau,8,1,tgt_doy_cos,Time of year (cos),0.9852,2.5906
+Kepulauan Riau,8,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8295
+Kepulauan Riau,8,3,tgt_doy_sin,Time of year (sin),0.1712,0.7934
+Kepulauan Riau,8,4,dev_ma52,Gap to 52-week average,-0.0176,0.7814
+Kepulauan Riau,8,5,price_level_rel,Price level vs province history,0.0812,-0.6239
+Kepulauan Riau,8,6,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),-8.2857,0.4629
+Lampung,8,1,tgt_doy_cos,Time of year (cos),0.9852,1.5455
+Lampung,8,2,tgt_doy_sin,Time of year (sin),0.1712,0.8916
+Lampung,8,3,dev_ma52,Gap to 52-week average,-0.0427,0.7931
+Lampung,8,4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.7699
+Lampung,8,5,margin_wholesale,Retail-to-wholesale margin,-0.0816,-0.6111
+Lampung,8,6,ret_4,"Price change, last 4 weeks",-0.0961,0.5714
+Maluku,8,1,tgt_doy_cos,Time of year (cos),0.9852,2.0752
+Maluku,8,2,spread_national,Gap to national price,0.2299,-1.3107
+Maluku,8,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.9992
+Maluku,8,4,tmax_4w_anom,"Temperature anomaly, last 4 weeks",2.1617,0.8360
+Maluku,8,5,tgt_doy_sin,Time of year (sin),0.1712,0.8170
+Maluku,8,6,vol_13,Recent volatility,0.0098,0.7457
+Maluku Utara,8,1,tgt_doy_cos,Time of year (cos),0.9852,1.9022
+Maluku Utara,8,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8553
+Maluku Utara,8,3,spread_national,Gap to national price,0.1591,-0.7786
+Maluku Utara,8,4,tgt_doy_sin,Time of year (sin),0.1712,0.7030
+Maluku Utara,8,5,price_level_rel,Price level vs province history,0.1135,-0.5309
+Maluku Utara,8,6,hot_days_4w,"Hot days (>=33°C), last 4 weeks",17.0000,-0.4730
+Nusa Tenggara Barat,8,1,dev_ma52,Gap to 52-week average,-0.0957,4.6355
+Nusa Tenggara Barat,8,2,margin_wholesale,Retail-to-wholesale margin,0.6673,1.8352
+Nusa Tenggara Barat,8,3,tgt_doy_cos,Time of year (cos),0.9852,1.8255
+Nusa Tenggara Barat,8,4,producer_ret_4,"Producer price change, 4 weeks",-0.2448,1.4758
+Nusa Tenggara Barat,8,5,tgt_doy_sin,Time of year (sin),0.1712,0.8844
+Nusa Tenggara Barat,8,6,price_level_rel,Price level vs province history,-0.0587,0.8770
+Nusa Tenggara Timur,8,1,tgt_doy_cos,Time of year (cos),0.9852,2.4299
+Nusa Tenggara Timur,8,2,spread_national,Gap to national price,0.2663,-1.1051
+Nusa Tenggara Timur,8,3,tgt_doy_sin,Time of year (sin),0.1712,0.9475
+Nusa Tenggara Timur,8,4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.7956
+Nusa Tenggara Timur,8,5,price_level_rel,Price level vs province history,0.1194,-0.6150
+Nusa Tenggara Timur,8,6,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),-8.2857,0.4782
+Papua,8,1,tgt_doy_cos,Time of year (cos),0.9852,2.5108
+Papua,8,2,spread_national,Gap to national price,0.2911,-2.0513
+Papua,8,3,tgt_doy_sin,Time of year (sin),0.1712,0.9065
+Papua,8,4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.9006
+Papua,8,5,vol_13,Recent volatility,0.0032,0.6806
+Papua,8,6,price_level_rel,Price level vs province history,0.1982,-0.6076
+Papua Barat,8,1,tgt_doy_cos,Time of year (cos),0.9852,2.3679
+Papua Barat,8,2,spread_national,Gap to national price,0.2518,-0.9559
+Papua Barat,8,3,dev_ma52,Gap to 52-week average,-0.0372,0.9230
+Papua Barat,8,4,tgt_doy_sin,Time of year (sin),0.1712,0.8851
+Papua Barat,8,5,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.7680
+Papua Barat,8,6,price_level_rel,Price level vs province history,0.1538,-0.7122
+Riau,8,1,dev_ma52,Gap to 52-week average,-0.2198,7.6437
+Riau,8,2,tgt_doy_cos,Time of year (cos),0.9852,2.6786
+Riau,8,3,tgt_doy_sin,Time of year (sin),0.1712,1.7283
+Riau,8,4,price_level_rel,Price level vs province history,-0.0741,1.1552
+Riau,8,5,spread_national,Gap to national price,-0.3625,1.0958
+Riau,8,6,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.0615
+Sulawesi Barat,8,1,tgt_doy_cos,Time of year (cos),0.9852,4.6510
+Sulawesi Barat,8,2,spread_national,Gap to national price,-0.1881,2.1716
+Sulawesi Barat,8,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.3996
+Sulawesi Barat,8,4,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),-8.2857,1.0860
+Sulawesi Barat,8,5,tmax_4w_anom,"Temperature anomaly, last 4 weeks",2.1308,0.9635
+Sulawesi Barat,8,6,tgt_doy_sin,Time of year (sin),0.1712,0.9367
+Sulawesi Selatan,8,1,tgt_doy_cos,Time of year (cos),0.9852,4.4746
+Sulawesi Selatan,8,2,spread_national,Gap to national price,-0.2608,2.4050
+Sulawesi Selatan,8,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.3853
+Sulawesi Selatan,8,4,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),-8.2857,1.2113
+Sulawesi Selatan,8,5,tgt_doy_sin,Time of year (sin),0.1712,1.0531
+Sulawesi Selatan,8,6,tmax_4w_anom,"Temperature anomaly, last 4 weeks",2.3671,0.6424
+Sulawesi Tengah,8,1,tgt_doy_cos,Time of year (cos),0.9852,2.7389
+Sulawesi Tengah,8,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.1894
+Sulawesi Tengah,8,3,tgt_doy_sin,Time of year (sin),0.1712,0.9524
+Sulawesi Tengah,8,4,hot_days_4w,"Hot days (>=33°C), last 4 weeks",25.0000,-0.8761
+Sulawesi Tengah,8,5,tgt_weeks_to_fitri,Weeks to Idul Fitri (target week),-8.2857,0.8730
+Sulawesi Tengah,8,6,dev_ma52,Gap to 52-week average,-0.0257,0.8144
+Sulawesi Tenggara,8,1,dev_ma52,Gap to 52-week average,-0.0893,3.9340
+Sulawesi Tenggara,8,2,tgt_doy_cos,Time of year (cos),0.9852,1.9985
+Sulawesi Tenggara,8,3,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.1148
+Sulawesi Tenggara,8,4,margin_producer_chg4,Change in producer margin,-0.4255,1.0076
+Sulawesi Tenggara,8,5,tgt_doy_sin,Time of year (sin),0.1712,0.9236
+Sulawesi Tenggara,8,6,price_level_rel,Price level vs province history,-0.0308,0.6137
+Sulawesi Utara,8,1,tgt_doy_cos,Time of year (cos),0.9852,2.6226
+Sulawesi Utara,8,2,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,1.1257
+Sulawesi Utara,8,3,province_code,Province,30.0000,0.7882
+Sulawesi Utara,8,4,tgt_doy_sin,Time of year (sin),0.1712,0.7302
+Sulawesi Utara,8,5,hot_days_4w,"Hot days (>=33°C), last 4 weeks",19.0000,-0.7091
+Sulawesi Utara,8,6,tmax_4w_anom,"Temperature anomaly, last 4 weeks",3.5908,-0.5950
+Sumatera Barat,8,1,dev_ma52,Gap to 52-week average,-0.1078,4.8867
+Sumatera Barat,8,2,tgt_doy_cos,Time of year (cos),0.9852,2.2257
+Sumatera Barat,8,3,province_code,Province,31.0000,1.2083
+Sumatera Barat,8,4,tgt_doy_sin,Time of year (sin),0.1712,0.9649
+Sumatera Barat,8,5,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.7942
+Sumatera Barat,8,6,ret_26,"Price change, last 6 months",-0.0728,0.6978
+Sumatera Selatan,8,1,dev_ma52,Gap to 52-week average,-0.1064,5.4699
+Sumatera Selatan,8,2,tgt_doy_cos,Time of year (cos),0.9852,1.6579
+Sumatera Selatan,8,3,tgt_doy_sin,Time of year (sin),0.1712,0.8981
+Sumatera Selatan,8,4,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8959
+Sumatera Selatan,8,5,tmax_4w_anom,"Temperature anomaly, last 4 weeks",2.0293,0.7531
+Sumatera Selatan,8,6,province_code,Province,32.0000,0.6531
+Sumatera Utara,8,1,dev_ma52,Gap to 52-week average,-0.1243,6.2732
+Sumatera Utara,8,2,tgt_doy_cos,Time of year (cos),0.9852,2.5943
+Sumatera Utara,8,3,tgt_doy_sin,Time of year (sin),0.1712,1.2299
+Sumatera Utara,8,4,province_code,Province,33.0000,1.0954
+Sumatera Utara,8,5,tgt_weeks_to_adha,Weeks to Idul Adha (target week),-8.0000,0.8864
+Sumatera Utara,8,6,weeks_to_fitri,Weeks to Idul Fitri (now),-12.0000,0.6176

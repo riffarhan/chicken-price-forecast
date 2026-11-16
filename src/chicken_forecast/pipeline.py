@@ -81,11 +81,12 @@ def run() -> dict:
 
     # Feature groups were chosen on the most recent 52 origins, so report the
     # earlier origins separately: they were never used for any modelling decision.
-    split = bt["origin_week"].max() - pd.Timedelta(weeks=52)
+    split = bt.groupby("horizon")["origin_week"].transform("max") - pd.Timedelta(weeks=52)
+    recent = bt["origin_week"] > split
     by_period = pd.concat(
         [
-            backtest_metrics(bt[bt["origin_week"] <= split]).assign(period="untouched hold-out (older origins)"),
-            backtest_metrics(bt[bt["origin_week"] > split]).assign(period="selection window (last 52 origins)"),
+            backtest_metrics(bt[~recent]).assign(period="untouched hold-out (older origins)"),
+            backtest_metrics(bt[recent]).assign(period="selection window (last 52 origins)"),
         ]
     )
     by_period.to_csv(OUTPUTS_DIR / "backtest_metrics_by_period.csv", index=False, float_format="%.4f")

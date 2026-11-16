@@ -101,9 +101,9 @@ FEATURE_GROUPS: dict[str, list[str]] = {
 
 # Groups kept in the production model, chosen from the ablation results
 # (outputs/ablation.csv, docs/methodology.md):
-#   kept:    calendar, supply_chain, weather_heat (each lowers backtest error)
-#   dropped: feed (raises error ~8-10%), weather_rain (no effect),
-#            egg (mixed: worse at 1w, better at 4w; weak literature support)
+#   kept:    calendar, supply_chain (DM p=0.03 at 1w), weather_heat
+#   dropped: feed (raises 4w error ~9%, DM p=0.02), weather_rain (no effect),
+#            egg (mixed signs; partial literature support)
 SELECTED_GROUPS = ["core_price", "calendar", "supply_chain", "weather_heat"]
 
 
