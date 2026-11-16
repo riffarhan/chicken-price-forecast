@@ -12,9 +12,9 @@ import shap
 import xgboost as xgb
 
 from chicken_forecast import __version__
-from chicken_forecast.config import HORIZONS, MODELS_DIR, OUTPUTS_DIR, TARGET_SERIES
+from chicken_forecast.config import BACKTEST_WEEKS, HORIZONS, MODELS_DIR, OUTPUTS_DIR, TARGET_SERIES
 from chicken_forecast.data.build import load_weekly_panel
-from chicken_forecast.features import FEATURE_LABELS, FEATURES, origin_features
+from chicken_forecast.features import FEATURE_LABELS, FEATURES, SELECTED_GROUPS, origin_features
 from chicken_forecast.models import backtest, backtest_metrics, fit_final_and_forecast
 
 log = logging.getLogger(__name__)
@@ -51,7 +51,7 @@ def global_importance(models: dict[int, xgb.XGBRegressor], origin_rows) -> pd.Da
     for h, model in models.items():
         sv = shap.TreeExplainer(model).shap_values(origin_rows[h][FEATURES])
         mean_abs = np.abs(sv).mean(axis=0) * 100
-        for f, v in zip(FEATURES, mean_abs):
+        for f, v in zip(FEATURES, mean_abs, strict=False):
             rows.append({"horizon": h, "feature": f, "label": FEATURE_LABELS.get(f, f), "mean_abs_impact_pct": v})
     return pd.DataFrame(rows).sort_values(["horizon", "mean_abs_impact_pct"], ascending=[True, False])
 
@@ -79,6 +79,17 @@ def run() -> dict:
     drivers = explain(models, origin_rows)
     importance = global_importance(models, origin_rows)
 
+    # Feature groups were chosen on the most recent 52 origins, so report the
+    # earlier origins separately: they were never used for any modelling decision.
+    split = bt["origin_week"].max() - pd.Timedelta(weeks=52)
+    by_period = pd.concat(
+        [
+            backtest_metrics(bt[bt["origin_week"] <= split]).assign(period="untouched hold-out (older origins)"),
+            backtest_metrics(bt[bt["origin_week"] > split]).assign(period="selection window (last 52 origins)"),
+        ]
+    )
+    by_period.to_csv(OUTPUTS_DIR / "backtest_metrics_by_period.csv", index=False, float_format="%.4f")
+
     bt.to_csv(OUTPUTS_DIR / "backtest_predictions.csv", index=False, float_format="%.4f")
     metrics.to_csv(OUTPUTS_DIR / "backtest_metrics.csv", index=False, float_format="%.4f")
     forecast.to_csv(OUTPUTS_DIR / "forecast_latest.csv", index=False, float_format="%.2f")
@@ -95,6 +106,8 @@ def run() -> dict:
         "n_weekly_rows": int(len(panel)),
         "target": TARGET_SERIES,
         "horizons": HORIZONS,
+        "backtest_weeks": BACKTEST_WEEKS,
+        "feature_groups": SELECTED_GROUPS,
         "backtest_mape": {int(h): round(float(v), 3) for h, v in xgb_m["MAPE"].items()},
         "backtest_skill_vs_naive": {int(h): round(float(v), 3) for h, v in xgb_m["skill_vs_naive"].items()},
         "features": FEATURES,

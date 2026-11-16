@@ -53,7 +53,7 @@ NATIONAL = "Semua Provinsi"  # PIHPS label for the national average
 HORIZONS = [1, 2, 4, 8]  # forecast horizons in weeks
 WEEK_RULE = "W-SUN"  # weeks end on Sunday, labelled by the Sunday date
 
-BACKTEST_WEEKS = 52  # length of the rolling-origin evaluation window
+BACKTEST_WEEKS = 156  # rolling-origin evaluation window: 3 years of weekly origins
 INTERVAL_COVERAGE = 0.80  # nominal coverage of the prediction intervals
 
 XGB_PARAMS = {

@@ -15,7 +15,7 @@ def _toy_panel(n_weeks=80, provinces=("Aceh", "Bali")):
     rng = np.random.default_rng(0)
     for i, p in enumerate(provinces):
         price = 35000 + 1000 * i + np.cumsum(rng.normal(0, 300, n_weeks))
-        for w, v in zip(weeks, price):
+        for w, v in zip(weeks, price, strict=False):
             rows.append(
                 {
                     "province": p,

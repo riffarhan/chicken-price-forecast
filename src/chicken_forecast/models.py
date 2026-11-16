@@ -153,6 +153,37 @@ def _sequential_intervals(bt: pd.DataFrame, horizons: list[int] = HORIZONS) -> p
     return bt
 
 
+def diebold_mariano(err_a: pd.DataFrame, err_b: pd.DataFrame, horizon: int) -> tuple[float, float]:
+    """Diebold-Mariano test of equal accuracy (absolute-error loss).
+
+    Diebold & Mariano (1995), with the Harvey, Leybourne & Newbold (1997)
+    small-sample correction. Errors are first averaged across provinces for
+    each origin week, giving one loss differential per week, so the
+    cross-sectional correlation between provinces doesn't inflate the
+    sample size. Long-run variance uses a rectangular window of h-1 lags,
+    because h-step forecast errors overlap.
+
+    Inputs: DataFrames with columns origin_week, abs_err (same rows in each).
+    Returns (DM statistic, two-sided p-value). Negative DM = A more accurate.
+    """
+    from scipy import stats
+
+    d = (err_a.groupby("origin_week")["abs_err"].mean() - err_b.groupby("origin_week")["abs_err"].mean()).dropna()
+    n = len(d)
+    if n < 10:
+        return np.nan, np.nan
+    dc = d - d.mean()
+    gamma = [np.dot(dc[k:], dc[: n - k]) / n for k in range(horizon)]
+    lrv = gamma[0] + 2 * sum(gamma[1:])
+    if lrv <= 0:
+        return np.nan, np.nan
+    dm = d.mean() / np.sqrt(lrv / n)
+    hln = np.sqrt((n + 1 - 2 * horizon + horizon * (horizon - 1) / n) / n)
+    dm *= hln
+    p = 2 * stats.t.sf(abs(dm), df=n - 1)
+    return float(dm), float(p)
+
+
 def backtest_metrics(bt: pd.DataFrame) -> pd.DataFrame:
     """MAE / RMSE / MAPE per horizon and model, plus skill vs naive and coverage."""
     ev = bt[~bt["is_warmup"]]
@@ -182,6 +213,10 @@ def backtest_metrics(bt: pd.DataFrame) -> pd.DataFrame:
                     "n": len(sub),
                 }
             )
+            if m != "naive":
+                a = sub.assign(abs_err=(sub[f"price_{m}"] - actual).abs())
+                b = sub.assign(abs_err=(sub["price_naive"] - actual).abs())
+                rows[-1]["dm_vs_naive"], rows[-1]["dm_pvalue"] = diebold_mariano(a, b, int(h))
     return pd.DataFrame(rows)
 
 

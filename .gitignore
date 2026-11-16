@@ -42,3 +42,7 @@ logs/
 
 # Paper PDFs are copyrighted: keep locally, cite in docs/literature.md
 docs/papers/*.pdf
+docs/papers/text/
+
+# Local Claude Code config
+.claude/

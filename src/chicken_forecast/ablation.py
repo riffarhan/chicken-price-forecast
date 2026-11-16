@@ -1,10 +1,13 @@
 """Feature-group ablation: does each literature-backed driver actually help?
 
-For every group in FEATURE_GROUPS we run the same rolling-origin backtest
-twice: with all groups, and with that one group removed ("leave one group
-out"). We also run each group added on its own to the core price features
-("add one group in"). A group earns its place in the production model only
-if removing it makes out-of-sample error worse.
+For every optional group in FEATURE_GROUPS we run the same rolling-origin
+backtest in two designs:
+
+* **leave one out**: all groups minus this one, compared with all groups
+* **add one in**: core price features plus this group, compared with core only
+
+Differences are tested with the Diebold-Mariano test, so a group's
+contribution is reported with a p-value, not just a point estimate.
 
 This complements the literature review: papers tell us *what could matter*,
 the ablation tells us *whether it matters for forecasting this data*.
@@ -19,20 +22,31 @@ import pandas as pd
 from chicken_forecast.config import OUTPUTS_DIR
 from chicken_forecast.data.build import load_weekly_panel
 from chicken_forecast.features import FEATURE_GROUPS, features_for, origin_features
-from chicken_forecast.models import backtest, backtest_metrics
+from chicken_forecast.models import backtest, diebold_mariano
 
 log = logging.getLogger(__name__)
 
 ABLATION_HORIZONS = [1, 4]
 
 
-def _score(feats: pd.DataFrame, groups: list[str]) -> dict[int, float]:
+def _errors(feats: pd.DataFrame, groups: list[str]) -> pd.DataFrame:
     bt = backtest(feats, features_for(groups), horizons=ABLATION_HORIZONS)
-    m = backtest_metrics(bt)
-    m = m[m["model"] == "XGBoost"].set_index("horizon")
-    return {h: float(m.loc[h, "MAE"]) for h in ABLATION_HORIZONS} | {
-        f"mape_{h}": float(m.loc[h, "MAPE"]) for h in ABLATION_HORIZONS
-    }
+    bt = bt[~bt["is_warmup"]].copy()
+    bt["abs_err"] = (bt["price_xgb"] - bt["target_price"]).abs()
+    bt["ape"] = bt["abs_err"] / bt["target_price"] * 100
+    return bt[["province", "origin_week", "horizon", "abs_err", "ape"]]
+
+
+def _compare(test: pd.DataFrame, ref: pd.DataFrame) -> dict:
+    """Metrics of *test* vs *ref*; positive change = test has larger error."""
+    out = {}
+    for h in ABLATION_HORIZONS:
+        a, b = test[test["horizon"] == h], ref[ref["horizon"] == h]
+        out[f"mae_{h}w"] = a["abs_err"].mean()
+        out[f"mape_{h}w"] = a["ape"].mean()
+        out[f"mae_change_{h}w_pct"] = (a["abs_err"].mean() / b["abs_err"].mean() - 1) * 100
+        out[f"dm_p_{h}w"] = diebold_mariano(a, b, h)[1]
+    return out
 
 
 def run() -> pd.DataFrame:
@@ -41,31 +55,25 @@ def run() -> pd.DataFrame:
     groups = list(FEATURE_GROUPS)
     optional = [g for g in groups if g != "core_price"]
 
-    rows = []
-    base_all = _score(feats, groups)
-    base_core = _score(feats, ["core_price"])
-    rows.append({"experiment": "all groups", "group": "-", **base_all})
-    rows.append({"experiment": "core price only", "group": "-", **base_core})
-    log.info("all: %s | core: %s", base_all, base_core)
-
+    err_all = _errors(feats, groups)
+    err_core = _errors(feats, ["core_price"])
+    rows = [
+        {"design": "reference", "group": "all groups", **_compare(err_all, err_all)},
+        {"design": "reference", "group": "core price only", **_compare(err_core, err_all)},
+    ]
     for g in optional:
-        without = _score(feats, [x for x in groups if x != g])
-        only = _score(feats, ["core_price", g])
-        rows.append({"experiment": "leave out", "group": g, **without})
-        rows.append({"experiment": "core + group", "group": g, **only})
-        log.info("%-14s without: %s | core+: %s", g, without, only)
+        without = _errors(feats, [x for x in groups if x != g])
+        added = _errors(feats, ["core_price", g])
+        # leave-one-out: positive change = removing g hurt = g helps
+        rows.append({"design": "leave one out (vs all)", "group": g, **_compare(without, err_all)})
+        # add-one-in: negative change = adding g helped
+        rows.append({"design": "add to core (vs core)", "group": g, **_compare(added, err_core)})
+        log.info("ablation: %s done", g)
 
     df = pd.DataFrame(rows)
-    # Positive = removing the group increases error = the group helps
-    for h in ABLATION_HORIZONS:
-        df[f"mae_change_when_removed_{h}w_pct"] = None
-        df[f"mae_change_when_added_{h}w_pct"] = None
-        lo = df["experiment"] == "leave out"
-        add = df["experiment"] == "core + group"
-        df.loc[lo, f"mae_change_when_removed_{h}w_pct"] = (df.loc[lo, h] / base_all[h] - 1) * 100
-        df.loc[add, f"mae_change_when_added_{h}w_pct"] = (df.loc[add, h] / base_core[h] - 1) * 100
-    df = df.rename(columns={h: f"mae_{h}w" for h in ABLATION_HORIZONS})
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     df.to_csv(OUTPUTS_DIR / "ablation.csv", index=False, float_format="%.4f")
-    log.info("\n%s", df.round(3).to_string(index=False))
+    with pd.option_context("display.width", 200):
+        log.info("\n%s", df.round(3).to_string(index=False))
     return df
+

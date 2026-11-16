@@ -166,7 +166,7 @@ def islamic_events() -> dict[str, pd.DatetimeIndex]:
     adha = _prefer_official(adha_calc, _official(r"^Idul Adha$"))
 
     ramadan = []
-    for calc, final in zip(fitri_calc, fitri):
+    for calc, final in zip(fitri_calc, fitri, strict=False):
         shift = final - calc
         days = h.loc[(h.hijri_month == 9) & (h.date < calc) & (h.date > calc - pd.Timedelta(days=35)), "date"]
         ramadan.extend(days + shift)

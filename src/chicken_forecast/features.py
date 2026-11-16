@@ -99,9 +99,12 @@ FEATURE_GROUPS: dict[str, list[str]] = {
     "weather_rain": ["rain_1w", "rain_4w_anom"],
 }
 
-# Groups kept in the production model. Set from the ablation results
-# (outputs/ablation.csv): a group stays only if it lowers backtest error.
-SELECTED_GROUPS = list(FEATURE_GROUPS)
+# Groups kept in the production model, chosen from the ablation results
+# (outputs/ablation.csv, docs/methodology.md):
+#   kept:    calendar, supply_chain, weather_heat (each lowers backtest error)
+#   dropped: feed (raises error ~8-10%), weather_rain (no effect),
+#            egg (mixed: worse at 1w, better at 4w; weak literature support)
+SELECTED_GROUPS = ["core_price", "calendar", "supply_chain", "weather_heat"]
 
 
 def features_for(groups: list[str]) -> list[str]:
